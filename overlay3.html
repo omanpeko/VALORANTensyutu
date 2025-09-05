@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <!--キャッシュを使わない設定らしい-->
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <!--ポップアップ表示-->
+  <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+  <!-- BGM再生 -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <link rel="stylesheet" href="index.css">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <!-- タイトル -->
+  <title>操作パネル</title>
+
+  <style type="text/css">
+    /* フォント設定 */
+    @font-face {
+      font-family: '07 ラノベPOP';
+      src: url('./font/ラノベPOP.otf') format('OpenType');
+    }
+
+    /* 左からスライドフェードイン */
+    .image {
+      width: 100%;
+      opacity: 0;
+      transform: translateX(-5%);
+      animation: slide-in-anim 1.5s ease-out forwards;
+    }
+
+    /* 右からスライドフェードイン */
+    .image2 {
+      width: 100%;
+      opacity: 0;
+      transform: translateX(5%);
+      animation: slide-in-anim 1.5s ease-out forwards;
+    }
+
+    /* 右からスライドフェードイン左右反転 */
+    .image22 {
+      width: 100%;
+      opacity: 0;
+      animation: slide-in-anim22 1.5s ease-out forwards;
+    }
+
+    /* 単純なフェードイン */
+    .image3 {
+      width: 100%;
+      opacity: 0;
+      animation: slide-in-anim 0.5s ease-out forwards;
+    }
+
+    /* 単純なフェードイン 8秒バージョン*/
+    .fade8s {
+      opacity: 0;
+      animation: slide-in-anim 8s ease-out forwards;
+    }
+
+    /* 単純なフェードイン 2秒バージョン*/
+    .fade2s {
+      opacity: 0;
+      animation: slide-in-anim 2s ease-out forwards;
+    }
+
+    /* 単純なフェードイン 0.2秒バージョン*/
+    .fade02s {
+      opacity: 0;
+      animation: slide-in-animb 0.2s ease-out forwards;
+    }
+
+    /* 単純なフェードイン 0.2秒バージョン*/
+    .fade05s05t {
+      opacity: 0;
+      animation: fade-0505 1s ease-out forwards;
+    }
+
+    /* 単純なフェードイン 左右反転*/
+    .image32 {
+      width: 100%;
+      opacity: 0;
+      animation: slide-in-anim5 0.5s ease-out forwards;
+    }
+
+    /* 単純なフェードアウト */
+    .imageoff {
+      animation: slide-in-anim2 0.5s ease-out forwards;
+    }
+
+    /* 単純なフェードアウト左右反転 */
+    .imageoffLR {
+      width: 100%;
+      opacity: 1;
+      transform: scale(-1, 1);
+      animation: slide-in-animLR 0.5s ease-out forwards;
+    }
+
+    /* 左にフェードアウト */
+    .imageoff2 {
+      width: 100%;
+      opacity: 1;
+      animation: slide-in-anim3 0.5s ease-out forwards;
+    }
+
+    /* 右にフェードアウト */
+    .imageoff3 {
+      width: 100%;
+      opacity: 1;
+      animation: slide-in-anim4 0.5s ease-out forwards;
+    }
+
+    /*テキストを左に*/
+    .textL {
+      width: 100%;
+      animation: slide-in-anim6 0.5s ease-out forwards;
+    }
+
+    /*テキストを右に*/
+    .textR {
+      width: 100%;
+      animation: slide-in-anim7 0.5s ease-out forwards;
+    }
+
+    /*テキストを左から中央に*/
+    .textCL {
+      width: 100%;
+      animation: slide-in-anim8 0.8s ease-out forwards;
+    }
+
+    /*テキストを右から中央に*/
+    .textCR {
+      width: 100%;
+      animation: slide-in-anim9 0.8s ease-out forwards;
+    }
+
+    /*一瞬で表示*/
+    .opacity1 {
+      opacity: 1;
+      animation: opacity1-anim 1s ease-out forwards;
+    }
+    @keyframes opacity1-anim {
+      0%,100%{
+        opacity: 1;
+      }
+    }
+
+    @keyframes fade-0505 {
+      0% {
+        opacity: 0;
+      }
+      50%{
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slide-in-anim {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateX(0%);
+      }
+    }
+    @keyframes slide-in-animL {
+      0% {
+        opacity: 0;
+        transform: translateX(-50%);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateX(0%);
+      }
+    }
+    @keyframes slide-in-animR {
+      0% {
+        opacity: 0;
+        transform: translateX(50%);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateX(0%);
+      }
+    }
+    @keyframes slide-in-animb {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+        background-color: #000;
+      }
+    }
+
+    @keyframes slide-in-anim2 {
+      0% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+
+
+    @keyframes slide-in-anim22 {
+      0% {
+        opacity: 0;
+        transform: translateX(5%) scale(-1, 1);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateX(0%) scale(-1, 1);
+      }
+    }
+
+    @keyframes slide-in-animLR {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slide-in-anim3 {
+      20% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateX(-5%);
+      }
+    }
+
+    @keyframes slide-in-anim4 {
+      20% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateX(5%);
+      }
+    }
+
+    @keyframes slide-in-anim5 {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slide-in-anim6 {
+      100% {
+        transform: translateX(-45px);
+      }
+    }
+
+    @keyframes slide-in-anim7 {
+      100% {
+        transform: translateX(45px);
+      }
+    }
+
+    @keyframes slide-in-anim8 {
+      0% {
+        transform: translateX(-45px);
+      }
+
+      100% {
+        transform: translateX(0%);
+      }
+    }
+
+    @keyframes slide-in-anim9 {
+      0% {
+        transform: translateX(45px);
+      }
+
+      100% {
+        transform: translateX(0%);
+      }
+    }
+
+    @keyframes fade-out07 {
+      0% {
+        opacity: 0.7;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+    @keyframes fade-in07 {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 0.7;
+      }
+    }
+    @keyframes fade-in06-1 {
+      0% {
+        opacity: 0.6;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+    @keyframes fade-out1-06 {
+      0% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0.6;
+      }
+    }
+
+
+    /* アニメーション--------------- */
+    /* 上からフェードイン */
+    .downfade {
+      opacity: 0;
+      transform: translateY(-2%);
+      animation: slide-in-anim 0.5s ease-out forwards;
+    }
+
+    /* ドンって出るやつ */
+    .don {
+      animation: poyoyon 0.2s ease-out forwards;
+    }
+
+    @keyframes poyoyon {
+      0% {
+        transform: scale(1.3, 1.3);
+      }
+
+      25% {
+        transform: scale(0.95, 0.95);
+      }
+
+      40% {
+        transform: scale(1.05, 1.05);
+      }
+
+      60% {
+        transform: scale(0.98, 0.98);
+      }
+
+      80% {
+        transform: scale(1.01, 1.01);
+      }
+
+      100% {
+        transform: scale(1.0, 1.0);
+      }
+
+      70%,
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* ドンって出るやつ左右反転 */
+    .donR {
+      animation: poyoyonR 0.2s ease-out forwards;
+    }
+
+    @keyframes poyoyonR {
+      0% {
+        transform: scale(-1.3, 1.3);
+      }
+
+      25% {
+        transform: scale(-0.95, 0.95);
+      }
+
+      40% {
+        transform: scale(-1.05, 1.05);
+      }
+
+      60% {
+        transform: scale(-0.98, 0.98);
+      }
+
+      80% {
+        transform: scale(-1.01, 1.01);
+      }
+
+      100% {
+        transform: scale(-1.0, 1.0);
+      }
+
+      70%,
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* キラって光る */
+    .kira {
+      animation: flash 1s ease-out forwards;
+    }
+
+    @keyframes flash {
+      3% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+
+    /* ワイプイン */
+    /* ワイプ中央から */
+    .wipeC {
+      animation: wipeC 1s cubic-bezier(.25, 1, .30, 1) both;
+    }
+
+    @keyframes wipeC {
+      0% {
+        clip-path: inset(0 50% 0 50%);
+      }
+
+      100% {
+        opacity: 1;
+        clip-path: inset(0 0 0 0);
+      }
+    }
+
+    /* ワイプ左から */
+    .wipeL {
+      animation: wipeL 1s cubic-bezier(.25, 1, .30, 1) both;
+    }
+
+    @keyframes wipeL {
+      0% {
+        clip-path: inset(0 100% 0 0);
+      }
+
+      100% {
+        opacity: 1;
+        clip-path: inset(0 0 0 0);
+      }
+    }
+
+    /* ワイプ左から */
+    .wipeR {
+      animation: wipeR 1s cubic-bezier(.25, 1, .30, 1) both;
+    }
+
+    @keyframes wipeR {
+      0% {
+        clip-path: inset(0 0 0 100%);
+      }
+
+      100% {
+        opacity: 1;
+        clip-path: inset(0 0 0 0);
+      }
+    }
+
+
+
+
+    .mask {
+      -webkit-mask-image: url("./img/valorantoverlay/piconmask.png");
+      mask-image: url("./img/valorantoverlay/piconmask.png");
+      -webkit-mask-size: 100%;
+      mask-size: 100%;
+    }
+
+    .mask2 {
+      -webkit-mask-image: url("./img/valorantoverlay/piconmask2.png");
+      mask-image: url("./img/valorantoverlay/piconmask2.png");
+      -webkit-mask-size: 100%;
+      mask-size: 100%;
+    }
+
+    /*左側の名前文字*/
+    .tname {
+      color: #FFF;
+      text-align: left;
+      font-size: 18px;
+      font-family: "游明朝体", "Yu Mincho", YuMincho, "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "MS P明朝", "MS PMincho", serif;
+      font-weight: bolder;
+      text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
+      width: 1920px;
+    }
+
+    .vname {
+      color: #FFF;
+      text-align: left;
+      font-size: 10px;
+      font-family: "游明朝体", "Yu Mincho", YuMincho, "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "MS P明朝", "MS PMincho", serif;
+      font-weight: bolder;
+      text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
+      width: 1920px;
+    }
+
+    /*右側の名前文字*/
+    .tname2 {
+      color: #FFF;
+      text-align: right;
+      font-size: 18px;
+      font-family: "游明朝体", "Yu Mincho", YuMincho, "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "MS P明朝", "MS PMincho", serif;
+      font-weight: bolder;
+      text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
+      width: 1920px;
+    }
+
+    .vname2 {
+      color: #FFF;
+      text-align: right;
+      font-size: 10px;
+      text-shadow: 0 0 3px #f00;
+      font-family: "游明朝体", "Yu Mincho", YuMincho, "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "MS P明朝", "MS PMincho", serif;
+      font-weight: bolder;
+      text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
+      width: 1920px;
+    }
+
+    /*観戦者の名前*/
+    .tname3 {
+      color: #FFF;
+      text-align: left;
+      font-size: 30px;
+      font-family: "游明朝体", "Yu Mincho", YuMincho, "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "MS P明朝", "MS PMincho", serif;
+      font-weight: bolder;
+      text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
+    }
+
+    .vname3 {
+      color: #FFF;
+      text-align: center;
+      font-size: 20px;
+      text-shadow: 0 0 3px #f00;
+      font-family: "游明朝体", "Yu Mincho", YuMincho, "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "MS P明朝", "MS PMincho", serif;
+      font-weight: bolder;
+      text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
+      width: 1920px;
+    }
+
+    .mname {
+      color: #FFF;
+      text-align: center;
+      font-size: 70px;
+      text-shadow: 0 0 3px #f00;
+      font-family: "07 ラノベPOP",fantasy;
+      font-weight: bolder;
+      text-shadow:  0 3px 3px #000, 0 0 3px #000;
+      width: 1920px;
+    }
+
+    .teamname {
+      color: #FFF;
+      text-align: center;
+      font-size: 40px;
+      text-shadow: 0 0 3px #f00;
+      font-family: "07 ラノベPOP",fantasy;
+      font-weight: bolder;
+      text-shadow: 0 3px 3px #000, 0 0 3px #000;
+      width: 1920px;
+    }
+    .teamname2L {
+      color: #FFF;
+      text-align: left;
+      font-size: 30px;
+      font-family: 'HiraginoSans-W8';
+      font-weight: bolder;
+      width: 1920px;
+    }
+    .teamname2R {
+      color: #FFF;
+      text-align: right;
+      font-size: 30px;
+      font-family: 'HiraginoSans-W8';
+      font-weight: bolder;
+      width: 1920px;
+    }
+    .win1 {
+      color: #FFF;
+      text-align: left;
+      font-size: 70px;
+      text-shadow: 0 0 3px #f00;
+      font-family: "游明朝体", "Yu Mincho", YuMincho, "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "MS P明朝", "MS PMincho", serif;
+      font-weight: bolder;
+      text-shadow: 0 0 3px #000, 0 0 3px #000;
+      width: 1920px;
+    }
+    .win2 {
+      color: #FFF;
+      text-align: right;
+      font-size: 70px;
+      text-shadow: 0 0 3px #f00;
+      font-family: "游明朝体", "Yu Mincho", YuMincho, "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "MS P明朝", "MS PMincho", serif;
+      font-weight: bolder;
+      text-shadow: 0 0 3px #000, 0 0 3px #000;
+      width: 1920px;
+    }
+
+    .round {
+      color: #FFF;
+      text-align: center;
+      font-size: 35px;
+      letter-spacing: 4px;
+      text-shadow: 0 0 3px #f00;
+      font-family: "fantasy",fantasy;
+      font-weight: bolder;
+      text-shadow: 0 0 3px #000, 0 0 3px #000;
+      width: 1920px;
+    }
+    .dia {
+      color: #FFF;
+      text-align: center;
+      font-size: 35px;
+      letter-spacing: 4px;
+      text-shadow: 0 0 3px #f00;
+      font-family: "fantasy",fantasy;
+      font-weight: bolder;
+      text-shadow: 0 0 3px #000, 0 0 3px #000;
+      width: 1920px;
+    }
+
+    /* BGM */
+  </style>
+
+
+</head>
+
+
+<body>
+
+
+  <div>
+    <img src="./img/valorantoverlay/左ディフェンダー3.png" style="opacity: 0; position: fixed;" />
+    <img src="./img/valorantoverlay/キャラピック.png" style="opacity: 0; position: fixed;" />
+    <img src="./img/valorantoverlay/観戦オーバーレイ.png" style="opacity: 0; position: fixed;" />
+
+
+    <!-- 誰を観戦しているか -->
+    <div id="wtname" style="position: fixed;">
+      <div class="tname3" style="top:950px; left:535px; position: fixed; ">Player1</div>
+      <img id="kansenback" src="./img/valorantoverlay/kansenback.png"  width="136px" height="136px" style="top:812px; left:529px; position: fixed;" />
+      <img id="kansen" src="./img/valorantoverlay/CYNTHIA.png"  width="130px" height="130px" style="top:815px; left:532px; position: fixed;" />
+    </div>
+    
+
+
+    <!-- ラウンド数 -->
+    <div id="rounddips" style="opacity: 0; position: fixed;">
+      <div id="roundbar" style="position: fixed;">
+        <div class="round" style="position: fixed; top:82px;">-</div>
+      </div>
+      <div id="roundL" style="position: fixed;">
+        <div class="round" style="position: fixed; top:84px; left:-37px;">50</div>
+      </div>
+      <div id="roundR" style="position: fixed;">
+        <div class="round" style="position: fixed; top:84px; left:37px;">50</div>
+      </div>
+    </div>
+
+    <!-- 残り人数 -->
+    <div id="zanki" style="opacity: 0; position: fixed;">
+      <div id="zanki1" style="position: fixed;">
+        <div class="dia" style="position: fixed; top:92px; left:-80px; font-size:20px; color:#49e6af;"></div>
+      </div>
+      <div id="zanki2" style="position: fixed;">
+        <div class="dia" style="position: fixed; top:92px; left:-110px; font-size:20px; color:#49e6af;"></div>
+      </div>
+      <div id="zanki3" style="position: fixed;">
+        <div class="dia" style="position: fixed; top:92px; left:-140px; font-size:20px; color:#49e6af;"></div>
+      </div>
+      <div id="zanki4" style="position: fixed;">
+        <div class="dia" style="position: fixed; top:92px; left:-170px; font-size:20px; color:#49e6af;"></div>
+      </div>
+      <div id="zanki5" style="position: fixed;">
+        <div class="dia" style="position: fixed; top:92px; left:-200px; font-size:20px; color:#49e6af;"></div>
+      </div>
+      <div id="zanki6" style="position: fixed;">
+        <div class="dia" style="position: fixed; top:92px; left:80px; font-size:20px; color:#de3f4d;"></div>
+      </div>
+      <div id="zanki7" style="position: fixed;">
+        <div class="dia" style="position: fixed; top:92px; left:110px; font-size:20px; color:#de3f4d;"></div>
+      </div>
+      <div id="zanki8" style="position: fixed;">
+        <div class="dia" style="position: fixed; top:92px; left:140px; font-size:20px; color:#de3f4d;"></div>
+      </div>
+      <div id="zanki9" style="position: fixed;">
+        <div class="dia" style="position: fixed; top:92px; left:170px; font-size:20px; color:#de3f4d;"></div>
+      </div>
+      <div id="zanki10" style="position: fixed;">
+        <div class="dia" style="position: fixed; top:92px; left:200px; font-size:20px; color:#de3f4d;"></div>
+      </div>
+    </div>
+
+    <!-- チーム名バナー -->
+    <div id="teamb1" style="opacity: 1; position: fixed;">
+      <div id="team1name2" style="opacity: 0; position: fixed; top:540px; left:7px;">
+        <div class="teamname2L" style="position: fixed; color: #50DEA5">Defender</div>
+      </div>
+    </div>
+    <div id="teamb2" style="opacity: 1; position: fixed;">
+      <div id="team2name2" style="opacity: 0; position: fixed; top:540px; left:-7px;">
+        <div class="teamname2R" style="position: fixed; color: #F15B56">Attacker</div>
+      </div>
+    </div>
+
+    <!-- WIN -->
+    <div style="opacity: 1;">
+      <img id="winb1" src="./img/valorantoverlay/winback1.png" style="opacity: 0; position: fixed; top:459px; left:0px;" />
+      <div id="win1" class="win1" style="opacity: 0; position: fixed; position: fixed; top:450px; left:20px;">WIN</div>
+    </div>
+    <div style="opacity: 1;">
+      <img id="winb2" src="./img/valorantoverlay/winback2.png" style="opacity: 0; position: fixed; top:459px; left:1570px;" />
+      <div id="win2" class="win2" style="opacity: 0; position: fixed; position: fixed; top:450px; left:-20px;">WIN</div>
+    </div>
+
+    <div style="display: flex;"></div>
+
+    <!-- プレイヤーバナー -->
+
+    <div id="bimg1" style="opacity: 0; position: fixed;">
+      <img id="bbimg1b" src="./img/valorantoverlay/bannerback1b.png" width="350px" height="100px" style="position: fixed;" />
+      <img id="bbimg1" src="./img/valorantoverlay/b1.png" width="350px" height="100px" style="position: fixed;" />
+      <img id="aimg1m" class="mask" src="./img/agent/Skye_iconm.png" width="95px" height="95px" style="position: fixed; opacity: 0;" />
+      <img id="pimg1" src="./img/valorantoverlay/valorant.png" width="87px" height="87px" style="position: fixed;" />
+      <img id="bbimg1h" src="./img/valorantoverlay/bannerhpRAG.png" width="200px" height="5px" style="position: fixed; " />
+      <img id="bbimg1u" src="./img/valorantoverlay/Firegifw.gif" width="80px" height="80px" style="opacity: 0; position: fixed;" />
+      <div id="tname1" style="position: fixed;">
+        <div class="tname" style="position: fixed;">Player1</div>
+      </div>
+      <div id="vname1" style="position: fixed;">
+        <div class="vname" style="position: fixed;">Player1</div>
+      </div>
+    </div>
+    <div id="bimg2" style="opacity: 0; position: fixed;">
+      <img id="bbimg2b" src="./img/valorantoverlay/bannerback1b.png" width="350px" height="100px" style="position: fixed;" />
+      <img id="bbimg2" src="./img/valorantoverlay/b1.png" width="350px" height="100px" style="position: fixed;" />
+      <img id="aimg2m" class="mask" src="./img/agent/Skye_iconm.png" width="95px" height="95px" style="position: fixed; opacity: 0;" />
+      <img id="pimg2" src="./img/valorantoverlay/valorant.png" width="87px" height="87px" style="position: fixed;" />
+      <img id="bbimg2h" src="./img/valorantoverlay/bannerhpRAG.png" width="200px" height="5px" style="position: fixed;" />
+      <img id="bbimg2u" src="./img/valorantoverlay/Firegifw.gif" width="80px" height="80px" style="opacity: 0; position: fixed;" />
+      <div id="tname2" style="position: fixed;">
+        <div class="tname" style="position: fixed;">Player2</div>
+      </div>
+      <div id="vname2" style="position: fixed;">
+        <div class="vname" style="position: fixed;">Player2</div>
+      </div>
+    </div>
+    <div id="bimg3" style="opacity: 0; position: fixed;">
+      <img id="bbimg3b" src="./img/valorantoverlay/bannerback1b.png" width="350px" height="100px" style="position: fixed;" />
+      <img id="bbimg3" src="./img/valorantoverlay/b1.png" width="350px" height="100px" style="position: fixed;" />
+      <img id="aimg3m" class="mask" src="./img/agent/Skye_iconm.png" width="95px" height="95px" style="position: fixed; opacity: 0;" />
+      <img id="pimg3" src="./img/valorantoverlay/valorant.png" width="87px" height="87px" style="position: fixed;" />
+      <img id="bbimg3h" src="./img/valorantoverlay/bannerhpRAG.png" width="200px" height="5px" style="position: fixed;" />
+      <img id="bbimg3u" src="./img/valorantoverlay/Firegifw.gif" width="80px" height="80px" style="opacity: 0; position: fixed;" />
+      <div id="tname3" style="position: fixed;">
+        <div class="tname" style="position: fixed;">Player3</div>
+      </div>
+      <div id="vname3" style="position: fixed;">
+        <div class="vname" style="position: fixed;">Player3</div>
+      </div>
+    </div>
+    <div id="bimg4" style="opacity: 0; position: fixed;">
+      <img id="bbimg4b" src="./img/valorantoverlay/bannerback1b.png" width="350px" height="100px" style="position: fixed;" />
+      <img id="bbimg4" src="./img/valorantoverlay/b1.png" width="350px" height="100px" style="position: fixed;" />
+      <img id="aimg4m" class="mask" src="./img/agent/Skye_iconm.png" width="95px" height="95px" style="position: fixed; opacity: 0;" />
+      <img id="pimg4" src="./img/valorantoverlay/valorant.png" width="87px" height="87px" style="position: fixed;" />
+      <img id="bbimg4h" src="./img/valorantoverlay/bannerhpRAG.png" width="200px" height="5px" style="position: fixed;" />
+      <img id="bbimg4u" src="./img/valorantoverlay/Firegifw.gif" width="80px" height="80px" style="opacity: 0; position: fixed;" />
+      <div id="tname4" style="position: fixed;">
+        <div class="tname" style="position: fixed;">Player4</div>
+      </div>
+      <div id="vname4" style="position: fixed;">
+        <div class="vname" style="position: fixed;">Player4</div>
+      </div>
+    </div>
+    <div id="bimg5" style="opacity: 0; position: fixed;">
+      <img id="bbimg5b" src="./img/valorantoverlay/bannerback1b.png" width="350px" height="100px" style="position: fixed;" />
+      <img id="bbimg5" src="./img/valorantoverlay/b1.png" width="350px" height="100px" style="position: fixed;" />
+      <img id="aimg5m" class="mask" src="./img/agent/Skye_iconm.png" width="95px" height="95px" style="position: fixed; opacity: 0;" />
+      <img id="pimg5" src="./img/valorantoverlay/valorant.png" width="87px" height="87px" style="position: fixed;" />
+      <img id="bbimg5h" src="./img/valorantoverlay/bannerhpRAG.png" width="200px" height="5px" style="position: fixed;" />
+      <img id="bbimg5u" src="./img/valorantoverlay/Firegifw.gif" width="80px" height="80px" style="opacity: 0; position: fixed;" />
+      <div id="tname5" style="position: fixed;">
+        <div class="tname" style="position: fixed;">Player5</div>
+      </div>
+      <div id="vname5" style="position: fixed;">
+        <div class="vname" style="position: fixed;">Player5</div>
+      </div>
+    </div>
+    <div id="bimg6" style="opacity: 0; position: fixed;">
+      <img id="bbimg6b" src="./img/valorantoverlay/bannerback2b.png" width="350px" height="100px" style="position: fixed;" />
+      <img id="bbimg6" src="./img/valorantoverlay/b2.png" width="350px" height="100px" style="position: fixed;" />
+      <img id="aimg6m" class="mask2" src="./img/agent/Skye_iconm.png" width="95px" height="95px" style="position: fixed; opacity: 0; transform: scale(-1, 1);" />
+      <img id="pimg6" src="./img/valorantoverlay/valorant.png" width="65px" height="65px" style="position: fixed; transform: scale(-1, 1);" />
+      <img id="bbimg6h" src="./img/valorantoverlay/bannerhpRAG2.png" width="200px" height="5px" style="position: fixed;" />
+      <img id="bbimg6u" src="./img/valorantoverlay/Firegifw.gif" width="80px" height="80px" style="opacity: 0; position: fixed;" />
+      <div id="tname6" style="position: fixed;">
+        <div class="tname2" style="position: fixed;">Player6</div>
+      </div>
+      <div id="vname6" style="position: fixed;">
+        <div class="vname2" style="position: fixed;">Player6</div>
+      </div>
+    </div>
+    <div id="bimg7" style="opacity: 0; position: fixed;">
+      <img id="bbimg7b" src="./img/valorantoverlay/bannerback2b.png" width="350px" height="100px" style="position: fixed;" />
+      <img id="bbimg7" src="./img/valorantoverlay/b2.png" width="350px" height="100px" style="position: fixed;" />
+      <img id="aimg7m" class="mask2" src="./img/agent/Skye_iconm.png" width="95px" height="95px" style="position: fixed; opacity: 0; transform: scale(-1, 1);" />
+      <img id="pimg7" src="./img/valorantoverlay/valorant.png" width="65px" height="65px" style="position: fixed; transform: scale(-1, 1);" />
+      <img id="bbimg7h" src="./img/valorantoverlay/bannerhpRAG2.png" width="200px" height="5px" style="position: fixed;" />
+      <img id="bbimg7u" src="./img/valorantoverlay/Firegifw.gif" width="80px" height="80px" style="opacity: 0; position: fixed;" />
+      <div id="tname7" style="position: fixed;">
+        <div class="tname2" style="position: fixed;">Player7</div>
+      </div>
+      <div id="vname7" style="position: fixed;">
+        <div class="vname2" style="position: fixed;">Player7</div>
+      </div>
+    </div>
+    <div id="bimg8" style="opacity: 0; position: fixed;">
+      <img id="bbimg8b" src="./img/valorantoverlay/bannerback2b.png" width="350px" height="100px" style="position: fixed;" />
+      <img id="bbimg8" src="./img/valorantoverlay/b2.png" width="350px" height="100px" style="position: fixed;" />
+      <img id="aimg8m" class="mask2" src="./img/agent/Skye_iconm.png" width="95px" height="95px" style="position: fixed; opacity: 0; transform: scale(-1, 1);" />
+      <img id="pimg8" src="./img/valorantoverlay/valorant.png" width="65px" height="65px" style="position: fixed; transform: scale(-1, 1);" />
+      <img id="bbimg8h" src="./img/valorantoverlay/bannerhpRAG2.png" width="200px" height="5px" style="position: fixed;" />
+      <img id="bbimg8u" src="./img/valorantoverlay/Firegifw.gif" width="80px" height="80px" style="opacity: 0; position: fixed;" />
+      <div id="tname8" style="position: fixed;">
+        <div class="tname2" style="position: fixed;">Player8</div>
+      </div>
+      <div id="vname8" style="position: fixed;">
+        <div class="vname2" style="position: fixed;">Player8</div>
+      </div>
+    </div>
+    <div id="bimg9" style="opacity: 0; position: fixed;">
+      <img id="bbimg9b" src="./img/valorantoverlay/bannerback2b.png" width="350px" height="100px" style="position: fixed;" />
+      <img id="bbimg9" src="./img/valorantoverlay/b2.png" width="350px" height="100px" style="position: fixed;" />
+      <img id="aimg9m" class="mask2" src="./img/agent/Skye_iconm.png" width="95px" height="95px" style="position: fixed; opacity: 0; transform: scale(-1, 1);" />
+      <img id="pimg9" src="./img/valorantoverlay/valorant.png" width="65px" height="65px" style="position: fixed; transform: scale(-1, 1);" />
+      <img id="bbimg9h" src="./img/valorantoverlay/bannerhpRAG2.png" width="200px" height="5px" style="position: fixed;" />
+      <img id="bbimg9u" src="./img/valorantoverlay/Firegifw.gif" width="80px" height="80px" style="opacity: 0; position: fixed;" />
+      <div id="tname9" style="position: fixed;">
+        <div class="tname2" style="position: fixed;">Player9</div>
+      </div>
+      <div id="vname9" style="position: fixed;">
+        <div class="vname2" style="position: fixed;">Player9</div>
+      </div>
+    </div>
+    <div id="bimg10" style="opacity: 0; position: fixed;">
+      <img id="bbimg10b" src="./img/valorantoverlay/bannerback2b.png" width="350px" height="100px" style="position: fixed;" />
+      <img id="bbimg10" src="./img/valorantoverlay/b2.png" width="350px" height="100px" style="position: fixed;" />
+      <img id="aimg10m" class="mask2" src="./img/agent/Skye_iconm.png" width="95px" height="95px" style="position: fixed; opacity: 0; transform: scale(-1, 1);" />
+      <img id="pimg10" src="./img/valorantoverlay/valorant.png" width="65px" height="65px" style="position: fixed; transform: scale(-1, 1);" />
+      <img id="bbimg10h" src="./img/valorantoverlay/bannerhpRAG2.png" width="200px" height="5px" style="position: fixed;" />
+      <img id="bbimg10u" src="./img/valorantoverlay/Firegifw.gif" width="80px" height="80px" style="opacity: 0; position: fixed;" />
+      <div id="tname10" style="position: fixed;">
+        <div class="tname2" style="position: fixed;">Player10</div>
+      </div>
+      <div id="vname10" style="position: fixed;">
+        <div class="vname2" style="position: fixed;">Player10</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- キャラピック演出 -->
+  <div id="picdisp">
+    <img id="blackback" src="./img/valorantoverlay/black.png" style="opacity: 0; position: fixed;" />
+    <video id="video" controls="false" controls preload="auto" width="1920" height="1080" style="opacity: 0; position: fixed;">
+      <source src="./movie/back.webm" type="video/webm">
+    </video>
+    <img id="underblack" src="./img/valorantoverlay/下黒帯.png" style="opacity: 0; position: fixed;" />
+    <img id="mapimg" src="./img/map/Ascent.png" style="opacity: 0; position: fixed;" />
+    <img id="mapwaku" src="./img/valorantoverlay/金枠.png" style="opacity: 0; position: fixed; margin-Top: 40px;" />
+    <img id="mapnamewaku" src="./img/valorantoverlay/マップ名枠.png" style="opacity: 0; position: fixed; margin-Top: 20px;" />
+    <div id="mapname" style="opacity: 0; position: fixed;">
+      <div class="mname" style="position: fixed;">Ascent</div>
+    </div>
+    <img id="vs" src="./img/valorantoverlay/VS2.png" style="opacity: 0; position: fixed; margin-Top: 192px;" />
+    <img id="team1namewaku" src="./img/valorantoverlay/チーム枠.png" style="opacity: 0; position: fixed;" />
+    <img id="team2namewaku" src="./img/valorantoverlay/チーム枠.png" style="opacity: 0; position: fixed;" />
+    <div id="team1name" style="opacity: 0; position: fixed;">
+      <div class="teamname" style="position: fixed;">Team1</div>
+    </div>
+    <div id="team2name" style="opacity: 0; position: fixed;">
+      <div class="teamname" style="position: fixed;">Team2</div>
+    </div>
+
+
+    <!-- キャラピック演出 エージェントの立ち絵 -->
+    <div id="team1" style="position: fixed;">
+      <img id="paimg5" src="./img/エージェント立ち/Jett.png" width="650px" height="650px" style="opacity: 0; position: fixed;" />
+      <img id="paimg4" src="./img/エージェント立ち/Sova.png" width="650px" height="650px" style="opacity: 0; position: fixed;" />
+      <img id="paimg3" src="./img/エージェント立ち/Killjoy.png" width="650px" height="650px" style="opacity: 0; position: fixed;" />
+      <img id="paimg2" src="./img/エージェント立ち/Brimstone.png" width="650px" height="650px" style="opacity: 0; position: fixed;" />
+      <img id="paimg1" src="./img/エージェント立ち/Chamber.png" width="650px" height="650px" style="opacity: 0; position: fixed;" />
+    </div>
+    <div id="team2" style="position: fixed;">
+      <img id="paimg10" src="./img/エージェント立ち/Skye.png" width="650px" height="650px" style="opacity: 0; position: fixed; transform: scale(-1, 1);" />
+      <img id="paimg9" src="./img/エージェント立ち/Astra.png" width="650px" height="650px" style="opacity: 0; position: fixed; transform: scale(-1, 1);" />
+      <img id="paimg8" src="./img/エージェント立ち/Fade.png" width="650px" height="650px" style="opacity: 0; position: fixed; transform: scale(-1, 1);" />
+      <img id="paimg7" src="./img/エージェント立ち/KAYO.png" width="650px" height="650px" style="opacity: 0; position: fixed; transform: scale(-1, 1);" />
+      <img id="paimg6" src="./img/エージェント立ち/Reyna.png" width="650px" height="650px" style="opacity: 0; position: fixed; transform: scale(-1, 1);" />
+    </div>
+    <div id="pp3" style="position: fixed;">
+      <img id="ppimg11" src="./img/valorantoverlay/プレイヤー枠.png" width="149px" height="149px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg12" src="./img/valorantoverlay/プレイヤー枠.png" width="149px" height="149px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg13" src="./img/valorantoverlay/プレイヤー枠.png" width="149px" height="149px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg14" src="./img/valorantoverlay/プレイヤー枠.png" width="149px" height="149px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg15" src="./img/valorantoverlay/プレイヤー枠.png" width="149px" height="149px" style="opacity: 0; position: fixed;" />
+    </div>
+    <div id="pp4" style="position: fixed;">
+      <img id="ppimg16" src="./img/valorantoverlay/プレイヤー枠.png" width="149px" height="149px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg17" src="./img/valorantoverlay/プレイヤー枠.png" width="149px" height="149px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg18" src="./img/valorantoverlay/プレイヤー枠.png" width="149px" height="149px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg19" src="./img/valorantoverlay/プレイヤー枠.png" width="149px" height="149px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg20" src="./img/valorantoverlay/プレイヤー枠.png" width="149px" height="149px" style="opacity: 0; position: fixed;" />
+    </div>
+    <div id="pp1" style="position: fixed;">
+      <img id="ppimg1" src="./img/valorantoverlay/valorant.png" width="145px" height="185px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg2" src="./img/valorantoverlay/valorant.png" width="145px" height="185px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg3" src="./img/valorantoverlay/valorant.png" width="145px" height="185px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg4" src="./img/valorantoverlay/valorant.png" width="145px" height="185px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg5" src="./img/valorantoverlay/valorant.png" width="145px" height="185px" style="opacity: 0; position: fixed;" />
+    </div>
+    <div id="pp2" style="position: fixed;">
+      <img id="ppimg6" src="./img/valorantoverlay/valorant.png" width="145px" height="185px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg7" src="./img/valorantoverlay/valorant.png" width="145px" height="185px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg8" src="./img/valorantoverlay/valorant.png" width="145px" height="185px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg9" src="./img/valorantoverlay/valorant.png" width="145px" height="185px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg10" src="./img/valorantoverlay/valorant.png" width="145px" height="185px" style="opacity: 0; position: fixed;" />
+    </div>
+  </div>
+  
+  
+  <!-- WIN動画 -->
+  <video id="video3" controls="false" controls preload="auto" width="1920" height="1080" style="opacity: 0; position: fixed;">
+    <source id="movie3" src="./movie/WINチーム.webm" type="video/webm">
+  </video>
+  <img id="winteam" src="./img/team/1.png" width="1125px" height="427px" style="opacity: 0; position: fixed;" />
+
+  <!-- フラッシュ演出用の白い画像 -->
+  <img id="whiteback" src="./img/valorantoverlay/whiteback.png" style="opacity: 0; position: fixed;" />
+
+  <!-- マップムービー -->
+  <video id="video2" controls="false" controls preload="auto" width="1920" height="1080" style="opacity: 0; position: fixed;">
+    <source id="movie2" src="./movie/Ascent.webm" type="video/webm">
+  </video>
+
+
+
+  <!--ボタン ------------------------>
+  <div id="buttons" style="position: fixed;">
+    <button name="button0" onclick="resetbutton();" type="button" style="position: fixed;  margin-left:70px;">リセット</button>
+    <button name="button00" onclick="load();" type="button" style="position: fixed;  margin-Top: 40px; margin-left:70px;">ロード</button>
+    <button name="button1" onclick="OnButtonClick();" type="button" style="position: fixed;">表示</button>
+    <button name="button2" onclick="OnButtonClick2();" type="button" style="position: fixed; margin-Top: 40px;">非表示</button>
+    <button name="button3" onclick="senddeath(1);" type="button" style="position: fixed; margin-Top: 80px;">デス１</button>
+    <button name="button4" onclick="senddeath(2);" type="button" style="position: fixed; margin-Top: 120px;">デス２</button>
+    <button name="button5" onclick="senddeath(3);" type="button" style="position: fixed; margin-Top: 160px;">デス３</button>
+    <button name="button6" onclick="senddeath(4);" type="button" style="position: fixed; margin-Top: 200px;">デス４</button>
+    <button name="button7" onclick="senddeath(5);" type="button" style="position: fixed; margin-Top: 240px;">デス５</button>
+    <button name="button8" onclick="senddeath(6);" type="button" style="position: fixed; margin-Top: 80px; margin-left:70px;">デス６</button>
+    <button name="button9" onclick="senddeath(7);" type="button" style="position: fixed; margin-Top: 120px; margin-left:70px;">デス７</button>
+    <button name="button10" onclick="senddeath(8);" type="button" style="position: fixed; margin-Top: 160px; margin-left:70px;">デス８</button>
+    <button name="button11" onclick="senddeath(9);" type="button" style="position: fixed; margin-Top: 200px; margin-left:70px;">デス９</button>
+    <button name="button12" onclick="senddeath(10);" type="button" style="position: fixed; margin-Top: 240px; margin-left:70px;">デス１０</button>
+    <button name="button13" onclick="koutai();" type="button" style="position: fixed; margin-Top: 280px; width:140px;">攻守交代</button>
+    <button name="button14" onclick="win1();" type="button" style="position: fixed; margin-Top: 320px; width:70px;">1</button>
+    <button name="button15" onclick="win2();" type="button" style="position: fixed; margin-Top: 360px; width:70px;">2</button>
+    <button name="button16" onclick="win3();" type="button" style="position: fixed; margin-Top: 320px; width:70px; margin-left:70px;">3</button>
+    <button name="button17" onclick="win4();" type="button" style="position: fixed; margin-Top: 360px; width:70px; margin-left:70px;">4</button>
+
+    <!-- BGM -->
+    <div>
+      <!-- 再生ボタン -->
+      <button id="play" class="btn btn-primary" style="position: fixed; margin: 20px 0 0 150px; width:121px;">再生</button><!-- #play -->
+      <button id="play2" class="btn btn-primary" style="position: fixed; margin: 20px 0 0 300px; width:121px;">再生2</button><!-- #play -->
+    </div>
+    <div>
+      <!-- 音量ボタン -->
+      <button id="volume-up" class="btn btn-success" style="position: fixed; margin: 65px 0 0 150px;"><i class="fas fa-caret-up"></i></button><!-- #volume-up -->
+      <button id="volume-down" class="btn btn-success" style="position: fixed; margin: 65px 0 0 190px;"><i class="fas fa-caret-down"></i></button><!-- #volume-down -->
+      <!-- ミュートボタン -->
+      <button id="mute" class="btn btn-warning" style="position: fixed; margin: 65px 0 0 230px;"><i class="fas fa-volume-mute"></i></button><!-- .btn btn-warning -->
+    </div>
+  </div>
+
+
+  <!-- インポート --------------------------------------------->
+  <!-- firebase -->
+  <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-firestore.js"></script>
+  <!--firestoreのAPI連携の設定データ-->
+  <script src="/js/firebase-config.js"></script>
+
+  <!-- jquery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+
+  <script type="text/javascript">
+    //グローバルヘンスううううううううううううう-----------------
+    //----------------------------------------------------------
+
+
+
+    //ボタン
+    //バナー表示
+    function OnButtonClick() {
+      submitflag("1", "1");
+    }
+    //バナー非表示
+    function OnButtonClick2() {
+      submitflag("1", "0");
+      submitflag("w", "0");
+    }
+    //プレイヤ－デス
+    function senddeath(name) {
+      submitflag("d" + name, "1");
+      submitflag("w" , name);
+    }
+    //リセット
+    function resetbutton() {
+      console.log("リセット");
+      submitflag("2", "1");
+    }
+    //画像のリロード
+    function load() {
+      submitflag("3", "1");
+    }
+    //攻守交代
+    function koutai() {
+      if ($("#team1name2").children().html() == "Defender") {
+        submitflag("kousyu","kou");
+      }
+      else{
+        submitflag("kousyu","syu");
+      }
+      //submitflag("r1", String(Number($("#roundL").children().html())+1));//WINを出すテスト
+    }
+    function win1() {
+      submitflag("win", "1");
+    }
+    function win2() {
+      submitflag("win", "2");
+    }
+    function win3() {
+      submitflag("win", "3");
+    }
+    function win4() {
+      submitflag("win", "4");
+    }
+    //フラグリセット
+    function flgreset() {
+      for (var n = 0; n <= 10; n++) {
+        flagdelete(String(n));
+        flagdelete(String("d" + n));
+        flagdelete(String("h" + n));
+      }
+      flagdelete("w");
+      flagdelete("m");
+    }
+    // 再生ボタン
+    const play = document.getElementById('play');
+    play.addEventListener('click', function() {
+      submitflag("m", "1");
+    });
+    const play2 = document.getElementById('play2');
+    play2.addEventListener('click', function() {
+      submitflag("m", "2");
+    });
+
+    //Pythonから受け取ったものをfirestoreに送る
+    function sendplayers(data) {
+      playerRef.doc(data).set({
+        no: "test",
+        playername: "test",
+        twitterid: "test",
+        rank: "test",
+        rankpoint: "test",
+        twitterurl: "test",
+        twittericonurl: "test"
+      })
+    }
+
+    function sleep(waitMsec) { 
+        var startMsec = new Date(); // 指定ミリ秒間だけループさせる（CPUは常にビジー状態） 
+        while (new Date() - startMsec < waitMsec); }
+
+
+    //---------------------------------------
+    //ウィンドウが読み込まれたときに実行
+    //---------------------------------------
+    window.onload = function() {
+      //---------------------------------------
+      //配置設定
+      //---------------------------------------
+      //画像を表示する座標を設定するoffsetxとoffsetyは中心からの距離　（Aviutlの座標と同じ）
+      function picoption(picname, x, y, w, h) {
+        var targetImg = document.getElementById(picname); //対象のイメージを選択
+        targetImg.style.width = w; //画像の大きさを決める
+        targetImg.style.height = h; //画像の大きさを決める
+        var targetWidth = targetImg.offsetWidth; //画像の横幅を取得
+        var targetHeight = targetImg.offsetHeight; //画像の高さを取得
+        var offsetx = x;
+        var offsety = y;
+        targetImg.style.marginLeft = 960 - (targetWidth / 2) + offsetx + "px";
+        targetImg.style.marginTop = 540 - (targetHeight / 2) + offsety + "px";
+      }
+
+      //エージェントが生きているかどうか---------------
+      var x1 = -784-60;
+      var x2 = -835-60;
+      var x3 = -875-60;
+      var x4 = -797-60;
+      var x5 = -779-60;
+      var y1 = 83;
+      var y2 = 100;
+      var y3 = 89;
+      var y4 = 82;
+      var y5 = 110;
+      var offsety2 = -100;
+      var offsetx2 = 0;
+      var hpx = 75;
+      var ux = -160;
+      //キャラピック時のプレイヤーアイコン座標
+      var px = [0, -485, -637, -333, -789, -181, 485, 333, 637, 181, 789]
+      //10人分のバナー描画
+      for (var n = 1; n <= 10; n++) {
+        //n=6のときリセットして左右反転
+        if (n == 6) {
+          offsety2 = -100;
+          x1 = x1 * (-1);
+          x2 = x2 * (-1);
+          x3 = x3 * (-1);
+          x4 = x4 * (-1);
+          x5 = x5 * (-1);
+          hpx = hpx *(-1);
+          ux = ux *(-1);
+          offsetx2 = -1920; //なんか文字ずれるからオフセット
+        }
+        offsety2 += 100;
+        var id1 = "bbimg" + n;
+        var id2 = "pimg" + n;
+        var id3 = "aimg" + n + "m";
+        var id4 = "tname" + n;
+        var id5 = "vname" + n;
+        
+        picoption(id1, x1, y1 + offsety2, "350px");
+        picoption(id1 + "b", x1, y1 + offsety2, "350px");
+        picoption(id1 + "h", x1+hpx, y1+47 + offsety2, "180px");
+        picoption(id1 + "u", x1+ux, y1+10 + offsety2, "80px");
+        picoption(id2, x2, y2 + offsety2, "65px", "65px");
+  
+        picoption(id3, x3, y3 + offsety2, "65px", "65px");
+        picoption(id4, x4 + offsetx2, y4 + offsety2);
+        picoption(id5, x5 + offsetx2, y5 + offsety2);
+        //エージェントピック画面のプレイヤーアイコン
+        
+        picoption("ppimg" + n, px[n], 440);
+        picoption("ppimg" + (n+10), px[n], 420);
+        
+      }
+      //観戦してる人----------------------------------
+
+      //エージェントピック画面-----------------------------
+      
+      picoption("paimg1", -500, -20);
+      picoption("paimg2", -610, -80);
+      picoption("paimg3", -390, -80);
+      picoption("paimg4", -720, -140);
+      picoption("paimg5", -280, -140);
+      picoption("paimg6", 500, -20);
+      picoption("paimg7", 390, -80);
+      picoption("paimg8", 610, -80);
+      picoption("paimg9", 280, -140);
+      picoption("paimg10", 720, -140);
+
+      picoption("mapimg", 0, -90);
+      picoption("mapname", -960, -502);
+      picoption("mapnamewaku", 0, -450);
+      picoption("team1namewaku", -485, 280);
+      picoption("team2namewaku", 485, 280);
+      picoption("team1name", -485 - 960, 252);
+      picoption("team2name", 485 - 960, 252);
+      picoption("vs", 0, 380);
+      picoption("winteam", 0, 20);
+    }
+
+    //---------------------------------------
+    //ウィンドウが読み込み終わったときに実行
+    //---------------------------------------
+    window.addEventListener('DOMContentLoaded', function() {
+      //firestoreからデータを取得※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+      playerupdate();
+      sleep(1000);
+      submitflag("w" , "0");
+    });
+
+
+
+
+
+    // 日付をYYYYMMDDの書式で返すメソッド
+    function formatDate(dt) {
+      var y = dt.getFullYear();
+      var m = ('00' + (dt.getMonth() + 1)).slice(-2);
+      var d = ('00' + dt.getDate()).slice(-2);
+      return (y + m + d);
+    }
+    // 日付をMMSSの書式で返すメソッド
+    function formatDate(dt) {
+      var y = dt.getFullYear();
+      var m = ('00' + (dt.getMonth() + 1)).slice(-2);
+      var d = ('00' + dt.getDate()).slice(-2);
+      return (y + m + d);
+    }
+
+    //今日の日付
+    var today = formatDate(new Date());
+
+    //---------------------------------------
+    //ドキュメントを作る（ドキュメント名を決める）
+    //---------------------------------------
+    var collectioname = "VALORANT";
+    var documentname1 = "flag";
+    var documentname2 = "playerlist";
+    var documentname3 = "hp";
+
+    //---------------------------------------
+    // Firestoreの準備
+    //---------------------------------------
+    // Firestoreのインスタンス作成
+    var db = firebase.firestore();
+
+    // ドキュメントのリファレンス取得
+    var flagRef = db.collection(collectioname).doc(documentname1).collection("VALORANT");
+    var playerRef = db.collection(collectioname).doc(documentname2).collection("VALORANT");
+    var hpRef = db.collection(collectioname).doc(documentname3).collection("VALORANT");
+
+    dofirestore(flagRef);
+    dofirestore(playerRef);
+    dofirestore(hpRef);
+
+    /**
+     * 同期処理
+     **/
+    //firestoreのデータを操作するおまじない
+    function dofirestore(Ref) {
+      //"ask"でポイントの小さい順に並べ替えを要求してる（askが昇順、ascが降順）
+      //フラグデータを操作
+      Ref.limit(100).onSnapshot((snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+
+
+
+          // 追加
+          if (change.type === 'added') {
+            console.log("追加 tuika()$kousin()");
+            tuika(); //データベースに新規でデータ（ドキュメント）が作られたときに実行される
+            kousin();
+            deathcount();
+          }
+          // 更新
+          else if (change.type === 'modified') {
+            console.log("更新");
+            kousin(); //データベースに何かしら変更があったときに実行される
+            deathcount();
+          }
+          // 削除
+          else if (change.type === 'removed') {
+            console.log("削除");
+            //削除のときはkousin()を実行しない
+          }
+        });
+      });
+    }
+
+    //チームの残り人数
+    function deathcount(){
+      setTimeout(function() {
+        //プレイヤーの残り人数を反映
+        var dL = deathL.reduce(function(sum, element){return sum + element;}, 0); //左チームのデス人数合計
+        for (var n = 5; n > (5-dL); n--){
+          $("#zanki"+n).css({'animation': 'slide-in-anim2 0.5s ease-out forwards'});
+        }
+      }, 100);
+      setTimeout(function() {
+        //プレイヤーの残り人数を反映
+        var dR = deathR.reduce(function(sum, element){return sum + element;}, 0); //右チームのデス人数合計
+        for (var n = 10; n > (10-dR); n--){
+          $("#zanki"+n).css({'animation': 'slide-in-anim2 0.5s ease-out forwards'});
+        }
+      }, 100);
+    }
+
+
+    //フラグデータ削除
+    function flagdelete(num) {
+      flagRef.doc(num).delete().then(function() {
+        console.log(num, " のフラグを削除しました");
+      }).catch(function(error) {
+        console.error("Error removing document: ", error);
+      });
+    }
+
+    // メッセージをfirestoreへ送信
+    function submitflag(fname, flg) {
+      flagRef.doc(fname).set({
+        name: fname,
+        flag: flg,
+        date: new Date()
+      })
+      console.log(fname, " のフラグが" + flg + "になりました");
+    }
+
+    // メッセージをfirestoreへ送信
+    function submithp(fname, hp) {
+      hpRef.doc(fname).set({
+        name: fname,
+        HP: hp,
+        date: new Date()
+      })
+      console.log("HPをすべて100にしました");
+    }
+
+
+    var startflg = 0; //バナーが表示されているか
+    var deathL = []; //左側のデスプレイヤー数
+    var deathR = []; //右側のデスプレイヤー数
+    var kousyuflg = 1; //左チームが攻守どっちなのか１が守り２が攻め
+
+
+    function kousin() {
+      //フラグの更新-----------
+      flagRef.orderBy('flag', "asc").limit(100).get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var data = doc.data();
+          if (data.name == "1" && data.flag == "1" && startflg == 0) {
+            reset();
+            console.log("1のフラグが1だったよ");
+            startflg = 1;
+            //プレイヤーの残り人数◆を５：５に
+            for (var n = 1; n <= 10; n++) {
+              deathL[n] = 0; //左プレイヤーのデスフラグリセット
+              deathR[n] = 0; //右プレイヤーのデスフラグリセット
+              $("#zanki"+n).css({'animation': 'slide-in-anim 0.5s ease-out forwards'});
+            }
+            //HPをすべて100に
+            for  (var n = 1; n <= 10; n++) {
+              submithp("h"+n,"100")
+            }
+          }
+          if (data.name == "1" && data.flag == "0") {
+            fadeout(1);
+            console.log("1のフラグが0だったよ");
+            startflg = 0;
+          }
+          if (data.name == "2" && data.flag == "1") {
+            startflg = 0;
+            flgreset();
+            submitflag("1", "1");
+            setTimeout(function() {
+              flagdelete("2");
+            }, 500);
+          }
+          //ラウンドの決着が付いた瞬間
+          if (data.name == "2" && data.flag == "2") {
+            setTimeout(function() {
+              submitflag("2", "1"); //プレイヤーバナー全員リセット
+            }, 500);
+          }
+          if (data.name == "3" && data.flag == "1") {
+            playerupdate();
+            setTimeout(function() {
+              flagdelete("3");
+            }, 500);
+          }
+          //ムービー・音楽再生
+          if (data.name == "m" && data.flag == "1") {
+            mplay();
+            setTimeout(function() {
+              flagdelete(String("m"));
+            }, 500);
+          }
+          if (data.name == "m" && data.flag == "2") {
+            mplay2();
+            setTimeout(function() {
+              flagdelete(String("m"));
+            }, 500);
+          }
+          //どっちが勝ったか
+          if (data.name == "win") {
+            var winx = Number(data.flag);
+            if (winx >=1 && winx <=50) {
+              console.log("winのフラグが"+data.flag+"だったよ");
+              $("#winteam").attr('src', "./img/team/" + data.flag + ".png");
+              submitflag("win", "0");
+              setTimeout(function() {
+                submitflag("m", "2"); //勝利ムービー再生
+              }, 500);
+            }
+          }
+
+
+          //攻守交代
+          if (data.name == "kousyu" && data.flag == "kou"){
+            ks2 = 2;
+            if (ks2 != kousyuflg){
+              kousyuflg =2;
+              kousyukoutai("kou");
+            }
+          }
+          if (data.name == "kousyu" && data.flag == "syu"){
+            ks2 = 1;
+            if (ks2 != kousyuflg){
+              kousyuflg =1;
+              kousyukoutai("syu");
+            }
+          }
+
+
+          //１～１０全部見るやつ
+          function d1(n){
+            //デス判定
+            death(n);
+            console.log("d" + n + "のフラグが1だったよ");
+            if (n<=5){ deathL[n]=1;}
+            if (n>5){ deathR[n]=1;}
+            //配列の合計値を返す
+            console.log(deathL.reduce(function(sum, element){return sum + element;}, 0));
+          }
+
+          function d0(n){
+            //セージで復活したとき
+            resetone(n);
+            console.log("d" + n + "のフラグが0だったよ");
+            startflg = 1;
+          }
+
+          if (data.name == ("d1") && data.flag == "1"){d1("1");}
+          if (data.name == ("d2") && data.flag == "1"){d1("2");}
+          if (data.name == ("d3") && data.flag == "1"){d1("3");}
+          if (data.name == ("d4") && data.flag == "1"){d1("4");}
+          if (data.name == ("d5") && data.flag == "1"){d1("5");}
+          if (data.name == ("d6") && data.flag == "1"){d1("6");}
+          if (data.name == ("d7") && data.flag == "1"){d1("7");}
+          if (data.name == ("d8") && data.flag == "1"){d1("8");}
+          if (data.name == ("d9") && data.flag == "1"){d1("9");}
+          if (data.name == ("d10") && data.flag == "1"){d1("10");}
+
+          if (data.name == ("d1") && data.flag == "0"){d0("1");}
+          if (data.name == ("d2") && data.flag == "0"){d0("2");}
+          if (data.name == ("d3") && data.flag == "0"){d0("3");}
+          if (data.name == ("d4") && data.flag == "0"){d0("4");}
+          if (data.name == ("d5") && data.flag == "0"){d0("5");}
+          if (data.name == ("d6") && data.flag == "0"){d0("6");}
+          if (data.name == ("d7") && data.flag == "0"){d0("7");}
+          if (data.name == ("d8") && data.flag == "0"){d0("8");}
+          if (data.name == ("d9") && data.flag == "0"){d0("9");}
+          if (data.name == ("d10") && data.flag == "0"){d0("10");}
+
+
+          for (var n = 1; n <= 10; n++) {
+            //ウルト
+            if (data.name == ("u" + n) && data.flag == "1") {
+              ultup(n);
+              console.log("u" + n + "のフラグが1だったよ");
+            }
+            if (data.name == ("u" + n) && data.flag == "0") {
+              ultdown(n);
+              console.log("u" + n + "のフラグが0だったよ");
+            }
+          }
+          //観戦 watch
+          if (data.name == "w") {
+              watchp(data.flag); //観戦者画像を切り替え
+              console.log("wのフラグが"+data.flag+"だったよ");
+          }
+          if (data.name == "w" && data.flag == "0") {
+            //観戦者を消す
+            watchpoff();
+          }
+          
+          //ラウンド数
+          if (data.name == "r1") {
+            //ラウンドの数値が増えたら
+            if (($("#roundL").children().html() != data.flag)&&($("#roundL").children().html()!="50")&&(data.flag != "0")){
+              console.log("左チームWIN")
+              $("#winb1").css({'animation': 'wipeL 0.5s ease-out forwards'}); //左からスライドフェードイン
+              setTimeout(function() {
+                $("#win1").css({'animation': 'slide-in-anim 1.2s ease-out forwards'}); //フェードイン
+              }, 300);
+              setTimeout(function() {
+                $("#winb1").css({'animation': 'slide-in-anim2 0.5s ease-out forwards'}); //フェードアウト
+                $("#win1").css({'animation': 'slide-in-anim2 0.5s ease-out forwards'}); //フェードアウト
+                submitflag("2","1");//４秒後に表示をリセット
+              }, 4000);
+            }
+            $("#roundL").children().html(data.flag); //HTMLを書き換える
+            console.log("r1のフラグが"+data.flag+"だったよ");
+          }
+          //ラウンドの数値が増えたら
+          if (data.name == "r2") {
+            if (($("#roundR").children().html() != data.flag)&&($("#roundL").children().html()!="50")&&(data.flag != "0")){
+              console.log("右チームWIN")
+              $("#winb2").css({'animation': 'wipeR 0.5s ease-out forwards'}); //右からスライドフェードイン
+              setTimeout(function() {
+                $("#win2").css({'animation': 'slide-in-anim 1.2s ease-out forwards'}); //フェードイン
+              }, 300);
+              setTimeout(function() {
+                $("#winb2").css({'animation': 'slide-in-anim2 0.5s ease-out forwards'}); //フェードアウト
+                $("#win2").css({'animation': 'slide-in-anim2 0.5s ease-out forwards'}); //フェードアウト
+                submitflag("2","1");//４秒後に表示をリセット
+              }, 4000);
+            }
+            $("#roundR").children().html(data.flag); //HTMLを書き換える
+            console.log("r2のフラグが"+data.flag+"だったよ");
+          }
+        });
+      })
+
+      //HPの更新-----------
+      hpRef.get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var data2 = doc.data();
+          function hpjudge(n){
+            hpbar(n,data2.HP);
+            console.log("h" + n + "のHPが"+data2.HP+"だったよ");
+          }
+
+          //HPゲージ
+          if (data2.name == ("h"+1) ) {hpjudge("1")}
+          if (data2.name == ("h"+2) ) {hpjudge("2")}
+          if (data2.name == ("h"+3) ) {hpjudge("3")}
+          if (data2.name == ("h"+4) ) {hpjudge("4")}
+          if (data2.name == ("h"+5) ) {hpjudge("5")}
+          if (data2.name == ("h"+6) ) {hpjudge("6")}
+          if (data2.name == ("h"+7) ) {hpjudge("7")}
+          if (data2.name == ("h"+8) ) {hpjudge("8")}
+          if (data2.name == ("h"+9) ) {hpjudge("9")}
+          if (data2.name == ("h"+10) ) {hpjudge("10")}
+
+        });
+      })
+    }
+
+    function tuika() {
+      //フラグの更新-----------
+      flagRef.orderBy('flag', "asc").limit(100).get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var data = doc.data();
+
+        });
+      })
+    }
+
+    //プレイヤーデータをfirestoreから取得-------------------
+    //------------------------------------------------------
+    var pnlist = {}; //プレイヤーネーム
+    var vnlist = {}; //ヴァロラントネーム
+    var piconlist = {}; //TwitterアイコンURL
+    var agentlist = {}; //エージェント
+
+    function playerupdate() {
+      playerRef.orderBy('no', "asc").limit(10).get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var data = doc.data();
+          var n = data.no; //no（ナンバー）を変数nに代入
+          pnlist[n] = data.playername
+          vnlist[n] = data.valorantname
+          piconlist[n] = data.twittericonurl
+          agentlist[n] = data.agent
+
+          /*
+          var tnameElement = document.getElementById( "tname"+n ) ;
+          var clientRect = tnameElement.getBoundingClientRect() ;
+          var px = window.pageXOffset + clientRect.left ;
+          */
+
+
+          //HTMLを書き換えていく
+          $("#tname" + n).children().html(pnlist[n]);
+          $("#vname" + n).children().html(vnlist[n]);
+          $("#pimg" + n).attr('src', "./img/agent/" + agentlist[n] + "_icon.png");
+          $("#aimg" + n + "m").attr('src', "./img/agent/" + agentlist[n] + "_iconm.png");
+
+          $("#paimg" + n).attr('src', "./img/エージェント立ち/" + agentlist[n] + ".png");
+          $("#ppimg" + n).attr('src', "./img/team/player/" + pnlist[n] + ".png");
+
+        });
+      })
+      flagRef.get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var data = doc.data();
+          if (data.name == "team1name") {
+            $("#team1name").children().html(data.value); //HTMLを書き換える
+          }
+          if (data.name == "team2name") {
+            $("#team2name").children().html(data.value); //HTMLを書き換える
+          }
+          if (data.name == "mapname") {
+            $("#mapname").children().html(data.value); //HTMLを書き換える
+            $("#mapimg").attr('src', "./img/map/" + data.value + ".png");
+            //ビデオの内容を更新
+            video2.src = "./movie/" + data.value + ".webm";
+            video2.load();
+          }
+        });
+      })
+    }
+
+    //スライドフェードを付与
+    //左から
+    function sf1(target, n) {
+      var targetImg = document.getElementById("bimg" + target);
+      var targetImgb1 = document.getElementById("bbimg" + target);
+      var targetImgm = document.getElementById("aimg" + target + "m");
+      var targetImgb = document.getElementById("bbimg" + target + "b");
+      var targetImgp = document.getElementById("pimg" + target);
+      var targettextt = document.getElementById("tname" + target);
+      var targettextv = document.getElementById("vname" + target);
+      setTimeout(function() {
+        $("#bbimg"+target).css({'animation': 'fade-in06-1 1.5s ease-out forwards'}); //バナー三角形を濃くする
+        $("#bbimg"+target+"h").css({'animation': 'slide-in-anim 1.5s ease-out forwards'}); //HPバーフェードイン
+        $("#vname" + target).css({'animation': 'slide-in-anim 1.5s ease-out forwards'}); //VALORANTネームフェードイン
+        targetImg.classList.remove("imageoff");
+        targetImgb1.classList.remove("imageoff2");
+        targetImgb1.classList.remove("image");
+        targetImgb1.classList.remove("image2");
+        targetImgb.classList.remove("imageoff2");
+        targetImgb.classList.remove("image");
+        targetImgb.classList.remove("image2");
+        targetImgm.classList.remove("image3");
+        targetImgm.classList.remove("imageoff");
+        targetImgp.classList.remove("imageoff");
+        targettextt.classList.remove("textL"); //名前を左へ
+        targettextv.classList.remove("textL");
+        targetImg.classList.add("image");
+        targetImgb.classList.add("image");
+        targetImgm.classList.add("imageoff");
+        targetImgp.classList.add("image");
+        //targettextt.classList.add("textCL");
+        //targettextv.classList.add("textCL");
+      }, 200 * n);
+    }
+    //右から
+    function sf2(target, n) {
+      var targetImg = document.getElementById("bimg" + target);
+      var targetImgb1 = document.getElementById("bbimg" + target);
+      var targetImgb = document.getElementById("bbimg" + target + "b");
+      var targetImgm = document.getElementById("aimg" + target + "m");
+      var targetImgp = document.getElementById("pimg" + target);
+      var targettextt = document.getElementById("tname" + target);
+      var targettextv = document.getElementById("vname" + target);
+      setTimeout(function() {
+        $("#bbimg"+target).css({'animation': 'fade-in06-1 1.5s ease-out forwards'}); //バナー三角形を濃くする
+        $("#bbimg"+target+"h").css({'animation': 'slide-in-anim 1.5s ease-out forwards'}); //HPバーフェードイン
+        $("#vname" + target).css({'animation': 'slide-in-anim 1.5s ease-out forwards'}); //VALORANTネームフェードイン
+        targetImg.classList.remove("imageoff");
+        targetImgb1.classList.remove("imageoff3");
+        targetImgb1.classList.remove("image");
+        targetImgb1.classList.remove("image2");
+        targetImgb.classList.remove("imageoff3");
+        targetImgb.classList.remove("image");
+        targetImgb.classList.remove("image2");
+        targetImgm.classList.remove("image32");
+        targetImgm.classList.remove("imageoff");
+        targetImgp.classList.remove("imageoff");
+        targettextt.classList.remove("textR"); //名前を右へ
+        targettextv.classList.remove("textR");
+        targetImg.classList.add("image2");
+        targetImgb.classList.add("image2");
+        targetImgm.classList.add("imageoff");
+        targetImgp.classList.add("image22");
+        //targettextt.classList.add("textCR");
+        //targettextv.classList.add("textCR");
+      }, 200 * n);
+    }
+    //フェードアウト
+    function fadeout(tien) {
+      for (var n = 1; n <= 10; n++) {
+        fadeoutF(n, tien);
+      }
+      //プレイヤーピック系のすべてを消去
+      $('#picdisp').children().each(function() {
+        $(this).addClass('imageoff');
+        $(this).removeClass('imageoff');
+      });
+      //チーム名の非表示
+      $("#team1name2").css({'animation': 'slide-in-anim2 0.5s ease-out forwards'});  //左バー
+      $("#team2name2").css({'animation': 'slide-in-anim2 0.5s ease-out forwards'});  //右バー
+      //ラウンド非表示
+    　$("#rounddips").css({'animation': 'slide-in-anim2 0.5s ease-out forwards'});
+      //残り人数非表示
+      $("#zanki").css({'animation': 'slide-in-anim2 0.5s ease-out forwards'});
+
+    }
+
+    function fadeoutF(target, n) {
+      var targetImg = document.getElementById("bimg" + target);
+      setTimeout(function() {
+        targetImg.classList.remove("image");
+        targetImg.classList.remove("image2");
+        targetImg.classList.add("imageoff");
+      }, 200 * n);
+    }
+
+    //HPゲージ変動
+    function hpbar(n,hp){
+      if (n<=5){
+        $("#bbimg"+n+"h").css({'ClipPath': 'inset(0 '+(100-hp)+'% 0 0)'});
+      }
+      if (n>=6){
+        $("#bbimg"+n+"h").css({'ClipPath': 'inset(0 0 0 '+(100-hp)+'%)'});
+      }
+    }
+
+    //ウルト
+    function ultup(n){
+      $("#bbimg"+n+"u").css({'animation': 'fade-in07 0.5s ease-out forwards'});
+    }
+    function ultdown(n){
+      $("#bbimg"+n+"u").css({'animation': 'fade-out07 0.5s ease-out forwards'});
+    }
+
+    //デスバナー (スライドフェードアウト)
+    function death(target) {
+      var targetImgb1 = document.getElementById("bbimg" + target);
+      var targetImgb = document.getElementById("bbimg" + target + "b");
+      var targetImgm = document.getElementById("aimg" + target + "m");
+      var targetImgp = document.getElementById("pimg" + target);
+      var targettextt = document.getElementById("tname" + target);
+      var targettextv = document.getElementById("vname" + target);
+      targetImgb1.classList.remove("image");
+      targetImgb1.classList.remove("image2");
+      targetImgb.classList.remove("image");
+      targetImgb.classList.remove("image2");
+      targetImgm.classList.remove("imageoff");
+      targetImgp.classList.remove("image");
+      targetImgp.classList.remove("image22");
+      targetImgp.classList.add("imageoff");
+      $("#bbimg"+target).css({'animation': 'fade-out1-06 0.5s ease-out forwards'}); //バナー三角形をうすくする
+      $("#bbimg"+target+"h").css({'animation': 'slide-in-anim2 0.5s ease-out forwards'}); //HPバーフェードアウト
+      $("#vname" + target).css({'animation': 'slide-in-anim2 0.5s ease-out forwards'}); //VALORANTネームフェードアウト
+
+      if (target <= 5) {
+        targettextt.classList.remove("textCL");
+        targettextv.classList.remove("textCL");
+        targetImgb.classList.add("imageoff2"); //左にスライドフェードアウト
+        targetImgm.classList.add("image3"); //モノクロ顔をフェードイン
+        targettextt.classList.add("textL"); //名前を左へ
+        targettextv.classList.add("textL");
+      } else {
+        targettextt.classList.remove("textCR");
+        targettextv.classList.remove("textCR");
+        targetImgb.classList.add("imageoff3"); //右にスライドフェードアウト
+        targetImgm.classList.add("image32"); // 顔が左向きでフェードイン
+        targettextt.classList.add("textR"); //名前を右へ
+        targettextv.classList.add("textR");
+      }
+    }
+    //バナー表示　（リセット）--------------------------------
+    function reset() {
+      //アニメーション
+      for (var n = 1; n <= 5; n++) {
+        sf1(n, n); //左側のバナーアニメーションセット
+        sf2((n + 5), n); //右側のバナーアニメーションセット
+        //チーム名の表示
+        $("#team1name2").css({'animation': 'slide-in-anim 1.5s ease-out forwards'});  //左バー
+        $("#team2name2").css({'animation': 'slide-in-anim 1.5s ease-out forwards'});  //右バー
+        //ラウンドの表示
+        $("#rounddips").css({'animation': 'slide-in-anim 0.5s ease-out forwards'});
+        //残り人数表示
+        $("#zanki").css({'animation': 'slide-in-anim 0.5s ease-out forwards'});
+      }
+    }
+
+    //バナー単体表示（セージウルト復活用）------------------------------------
+    function resetone(n) {
+      if (n<=5){
+        sf1(n,1); //左側のバナーアニメーションセット
+      }
+      else {
+        sf2(n,1); //右側のバナーアニメーションセット
+      }
+    }
+
+    //観戦中のプレイヤー切り替え
+    function watchp(n) {
+      var nn = Number(n);
+      //nが１～１０のとき観戦者のアイコンを変える
+      if (nn>0 && nn<=10 ){
+        $("#wtname").children().html(pnlist[n]);
+        $("#kansen").attr('src', piconlist[n]);
+        //フェードインアニメーション
+        var targetwImg = document.getElementById("wtname");
+        targetwImg.classList.remove("imageoff");
+        targetwImg.classList.add("image3");
+      }
+    }
+
+    function watchpoff() {
+      //フェードアウトアニメーション
+      var targetwImg = document.getElementById("wtname");
+      targetwImg.classList.remove("image3");
+      targetwImg.classList.add("imageoff");
+    }
+
+    //攻守交代
+    function kousyukoutai(ks){
+      console.log("攻守交代");
+      if (ks=="kou"){
+        console.log("左攻")
+        //左を赤へ
+        $("#winb1").attr('src', "./img/valorantoverlay/winback22.png");
+        $("#team1name2").children().html("Attacker"); //攻守のHTMLを書き換える
+        $("#team1name2").children().css("color","#F15B56"); //攻守の色を変える
+        for (let i = 1; i < 6; i++){
+          $("#bbimg"+i).attr('src', "./img/valorantoverlay/b12.png");//バナーの三角の色を変える
+        }
+        //右を青へ
+        $("#winb2").attr('src', "./img/valorantoverlay/winback12.png");
+        $("#team2name2").children().html("Defender"); //攻守のHTMLを書き換える
+        $("#team2name2").children().css("color","#50DEA5"); //攻守の色を変える
+        for (let i = 6; i < 11; i++){
+          $("#bbimg"+i).attr('src', "./img/valorantoverlay/b22.png");//バナーの三角の色を変える
+        }
+      }
+
+      if (ks=="syu"){
+        console.log("左守")
+        //左を緑へ
+        $("#winb1").attr('src', "./img/valorantoverlay/winback1.png");
+        $("#team1name2").children().html("Defender"); //攻守のHTMLを書き換える
+        $("#team1name2").children().css("color","#50DEA5"); //攻守の色を変える
+        for (let i = 1; i < 6; i++){
+          $("#bbimg"+i).attr('src', "./img/valorantoverlay/b1.png");//バナーの三角の色を変える
+        }
+        //右を赤へ
+        $("#winb2").attr('src', "./img/valorantoverlay/winback2.png");
+        $("#team2name2").children().html("Attacker"); //攻守のHTMLを書き換える
+        $("#team2name2").children().css("color","#F15B56"); //攻守の色を変える
+        for (let i = 6; i < 11; i++){
+          $("#bbimg"+i).attr('src', "./img/valorantoverlay/b2.png");//バナーの三角の色を変える
+        }
+      }
+
+    }
+
+    //BGM再生----------------------------------------------------------
+    'use strict';
+
+    // 要素
+    const music = new Audio('music/fade2.mp3');
+    const music2 = new Audio('music/bgm2.mp3');
+    const volumeUp = document.getElementById('volume-up');
+    const volumeDown = document.getElementById('volume-down');
+    const mute = document.getElementById('mute');
+
+    //ビデオのUIを消す
+    const video = document.querySelector('#video');
+    video.controls = false;
+
+    const video2 = document.querySelector('#video2');
+    video2.controls = false;
+
+    const video3 = document.querySelector('#video3');
+    video3.controls = false;
+
+    //音量設定
+    //music.volume = 0.8;
+    //music2.volume = 0.2;
+    music.volume = 0;
+    music2.volume = 0;
+    video2.volume = 0;
+
+
+    // 再生ボタンが押されたとき
+    function mplay() {
+
+    }
+
+    function mplay2() {
+
+    }
+
+    // 音量ボタン
+    volumeUp.addEventListener('click', function() {
+
+    });
+    volumeDown.addEventListener('click', function() {
+
+    });
+
+    // ミュートボタン
+    mute.addEventListener('click', function() {
+      mmute();
+    });
+
+    //デフォルトはミュートにしておく
+    mmute();
+
+    function mmute() {
+      if (music.muted) {
+        music.muted = false;
+        music2.muted = false;
+        mute.innerHTML = '<i class="fas fa-volume-mute">';
+        hidebutton(); //ボタンを全部消す
+      } else {
+        music.muted = true;
+        music2.muted = false;
+        mute.innerHTML = '<i class="fas fa-volume-up"></i>';
+      }
+    }
+
+    function hidebutton() {
+      //ボタンを全部消す
+      $('#buttons').css({
+        opacity: '0'
+      });
+    }
+
+    //アニメーションさせる関数
+    function animeon(target, classname) {
+      //クラスを付与してアニメーションさせて、そのクラスはすぐに削除
+      document.getElementById(target).classList.add(classname);
+      document.getElementById(target).classList.remove(classname);
+    }
+
+    var timerID = [];
+    var timerID2 = [];
+    var kasoku = 0;
+    //タイマー------------------------------
+    function ontimer() {
+      
+    }
+
+    //勝利ムービー------------------------------
+    function ontimer2() {
+    }
+
+    function resettimer() {
+
+    }
+    function resettimer2() {
+
+    }
+
+  </script>
+
+</body>
+
+</html>
