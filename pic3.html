@@ -736,27 +736,6 @@
     });
 
 
-
-
-
-    // 日付をYYYYMMDDの書式で返すメソッド
-    function formatDate(dt) {
-      var y = dt.getFullYear();
-      var m = ('00' + (dt.getMonth() + 1)).slice(-2);
-      var d = ('00' + dt.getDate()).slice(-2);
-      return (y + m + d);
-    }
-    // 日付をMMSSの書式で返すメソッド
-    function formatDate(dt) {
-      var y = dt.getFullYear();
-      var m = ('00' + (dt.getMonth() + 1)).slice(-2);
-      var d = ('00' + dt.getDate()).slice(-2);
-      return (y + m + d);
-    }
-
-    //今日の日付
-    var today = formatDate(new Date());
-
     //---------------------------------------
     //ドキュメントを作る（ドキュメント名を決める）
     //---------------------------------------
@@ -1175,6 +1154,7 @@
 </body>
 
 </html>
+
 
 
 
