@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <!--キャッシュを使わない設定らしい-->
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <!--ポップアップ表示-->
+  <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+  <!-- BGM再生 -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <link rel="stylesheet" href="index.css">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <!-- タイトル -->
+  <title>ピック表示オーバーレイ</title>
+
+  <style type="text/css">
+    /* 左からスライドフェードイン */
+    .image {
+      width: 100%;
+      opacity: 0;
+      transform: translateX(-5%);
+      animation: slide-in-anim 1.5s ease-out forwards;
+    }
+
+    /* 右からスライドフェードイン */
+    .image2 {
+      width: 100%;
+      opacity: 0;
+      transform: translateX(5%);
+      animation: slide-in-anim 1.5s ease-out forwards;
+    }
+
+    /* 右からスライドフェードイン左右反転 */
+    .image22 {
+      width: 100%;
+      opacity: 0;
+      animation: slide-in-anim22 1.5s ease-out forwards;
+    }
+
+    /* 単純なフェードイン */
+    .image3 {
+      width: 100%;
+      opacity: 0;
+      animation: slide-in-anim 0.5s ease-out forwards;
+    }
+
+    /* 単純なフェードイン 8秒バージョン*/
+    .fade8s {
+      opacity: 0;
+      animation: slide-in-anim 8s ease-out forwards;
+    }
+
+    /* 単純なフェードイン 2秒バージョン*/
+    .fade2s {
+      opacity: 0;
+      animation: slide-in-anim 2s ease-out forwards;
+    }
+    /* 単純なフェードイン 2秒バージョン*/
+    .fade5s {
+      opacity: 0;
+      animation: slide-in-anim 5s ease-out forwards;
+    }
+
+    /* 単純なフェードイン 0.2秒バージョン*/
+    .fade02s {
+      opacity: 0;
+      animation: slide-in-animb 0.2s ease-out forwards;
+    }
+
+    /* 単純なフェードイン 左右反転*/
+    .image32 {
+      width: 100%;
+      opacity: 0;
+      animation: slide-in-anim5 0.5s ease-out forwards;
+    }
+
+    /* 単純なフェードアウト */
+    .imageoff {
+      opacity: 1;
+      animation: slide-in-anim2 0.5s ease-out forwards;
+    }
+
+    /* 単純なフェードアウト左右反転 */
+    .imageoffLR {
+      width: 100%;
+      opacity: 1;
+      transform: scale(-1, 1);
+      animation: slide-in-animLR 0.5s ease-out forwards;
+    }
+
+    /* 左にフェードアウト */
+    .imageoff2 {
+      width: 100%;
+      opacity: 1;
+      animation: slide-in-anim3 0.5s ease-out forwards;
+    }
+
+    /* 右にフェードアウト */
+    .imageoff3 {
+      width: 100%;
+      opacity: 1;
+      animation: slide-in-anim4 0.5s ease-out forwards;
+    }
+
+    /*テキストを左に*/
+    .textL {
+      width: 100%;
+      animation: slide-in-anim6 0.5s ease-out forwards;
+    }
+
+    /*テキストを右に*/
+    .textR {
+      width: 100%;
+      animation: slide-in-anim7 0.5s ease-out forwards;
+    }
+
+    /*テキストを左から中央に*/
+    .textCL {
+      width: 100%;
+      animation: slide-in-anim8 0.8s ease-out forwards;
+    }
+
+    /*テキストを右から中央に*/
+    .textCR {
+      width: 100%;
+      animation: slide-in-anim9 0.8s ease-out forwards;
+    }
+
+    /*一瞬で表示*/
+    .opacity1 {
+      opacity: 1;
+      animation: opacity1-anim 1s ease-out forwards;
+    }
+    @keyframes opacity1-anim {
+      0%,100%{
+        opacity: 1;
+      }
+    }
+
+
+    @keyframes slide-in-anim {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateX(0%);
+      }
+    }
+    @keyframes slide-in-animb {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+        background-color: #000;
+      }
+    }
+
+    @keyframes slide-in-anim2 {
+      0% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes slide-in-anim22 {
+      0% {
+        opacity: 0;
+        transform: translateX(5%) scale(-1, 1);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateX(0%) scale(-1, 1);
+      }
+    }
+
+    @keyframes slide-in-animLR {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slide-in-anim3 {
+      20% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateX(-5%);
+      }
+    }
+
+    @keyframes slide-in-anim4 {
+      20% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateX(5%);
+      }
+    }
+
+    @keyframes slide-in-anim5 {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slide-in-anim6 {
+      100% {
+        transform: translateX(-45px);
+      }
+    }
+
+    @keyframes slide-in-anim7 {
+      100% {
+        transform: translateX(45px);
+      }
+    }
+
+    @keyframes slide-in-anim8 {
+      0% {
+        transform: translateX(-45px);
+      }
+
+      100% {
+        transform: translateX(0%);
+      }
+    }
+
+    @keyframes slide-in-anim9 {
+      0% {
+        transform: translateX(45px);
+      }
+
+      100% {
+        transform: translateX(0%);
+      }
+    }
+
+
+    /* アニメーション--------------- */
+    /* 上からフェードイン */
+    .downfade {
+      opacity: 0;
+      transform: translateY(-2%);
+      animation: slide-in-anim 0.5s ease-out forwards;
+    }
+
+    /* ドンって出るやつ */
+    .don {
+      animation: poyoyon 0.2s ease-out forwards;
+    }
+
+    @keyframes poyoyon {
+      0% {
+        transform: scale(1.3, 1.3);
+      }
+
+      25% {
+        transform: scale(0.95, 0.95);
+      }
+
+      40% {
+        transform: scale(1.05, 1.05);
+      }
+
+      60% {
+        transform: scale(0.98, 0.98);
+      }
+
+      80% {
+        transform: scale(1.01, 1.01);
+      }
+
+      100% {
+        transform: scale(1.0, 1.0);
+      }
+
+      70%,
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* ドンって出るやつ左右反転 */
+    .donR {
+      animation: poyoyonR 0.2s ease-out forwards;
+    }
+
+    @keyframes poyoyonR {
+      0% {
+        transform: scale(-1.3, 1.3);
+      }
+
+      25% {
+        transform: scale(-0.95, 0.95);
+      }
+
+      40% {
+        transform: scale(-1.05, 1.05);
+      }
+
+      60% {
+        transform: scale(-0.98, 0.98);
+      }
+
+      80% {
+        transform: scale(-1.01, 1.01);
+      }
+
+      100% {
+        transform: scale(-1.0, 1.0);
+      }
+
+      70%,
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* キラって光る */
+    .kira {
+      animation: flash 1s ease-out forwards;
+    }
+
+    @keyframes flash {
+      3% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+
+    /* 単純なフェードイン 0.2秒バージョン*/
+    .fade05s05t {
+      opacity: 0;
+      animation: fade-0505 1s ease-out forwards;
+    }
+    @keyframes fade-0505 {
+      0% {
+        opacity: 0;
+      }
+      50%{
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* ワイプイン */
+    /* ワイプ中央から */
+    .wipeC {
+      animation: wipeC 1s cubic-bezier(.25, 1, .30, 1) both;
+    }
+
+    @keyframes wipeC {
+      0% {
+        clip-path: inset(0 50% 0 50%);
+      }
+
+      100% {
+        opacity: 1;
+        clip-path: inset(0 0 0 0);
+      }
+    }
+
+    /* ワイプ左から */
+    .wipeL {
+      animation: wipeL 1s cubic-bezier(.25, 1, .30, 1) both;
+    }
+
+    @keyframes wipeL {
+      0% {
+        clip-path: inset(0 100% 0 0);
+      }
+
+      100% {
+        opacity: 1;
+        clip-path: inset(0 0 0 0);
+      }
+    }
+
+
+
+
+    .mask {
+      -webkit-mask-image: url("./img/valorantoverlay/piconmask.png");
+      mask-image: url("./img/valorantoverlay/piconmask.png");
+      -webkit-mask-size: 100%;
+      mask-size: 100%;
+    }
+
+    .mask2 {
+      -webkit-mask-image: url("./img/valorantoverlay/piconmask2.png");
+      mask-image: url("./img/valorantoverlay/piconmask2.png");
+      -webkit-mask-size: 100%;
+      mask-size: 100%;
+    }
+
+    /*左側の名前文字*/
+    .tname {
+      color: #FFF;
+      text-align: left;
+      font-size: 18px;
+      font-family: "游明朝体", "Yu Mincho", YuMincho, "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "MS P明朝", "MS PMincho", serif;
+      font-weight: bolder;
+      text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
+    }
+
+    .vname {
+      color: #FFF;
+      text-align: left;
+      font-size: 10px;
+      font-family: "游明朝体", "Yu Mincho", YuMincho, "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "MS P明朝", "MS PMincho", serif;
+      font-weight: bolder;
+      text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
+    }
+
+    /*右側の名前文字*/
+    .tname2 {
+      color: #FFF;
+      text-align: right;
+      font-size: 18px;
+      font-family: "游明朝体", "Yu Mincho", YuMincho, "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "MS P明朝", "MS PMincho", serif;
+      font-weight: bolder;
+      text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
+      width: 1920px;
+    }
+
+    .vname2 {
+      color: #FFF;
+      text-align: right;
+      font-size: 10px;
+      text-shadow: 0 0 3px #f00;
+      font-family: "游明朝体", "Yu Mincho", YuMincho, "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "MS P明朝", "MS PMincho", serif;
+      font-weight: bolder;
+      text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
+      width: 1920px;
+    }
+
+    /*観戦者の名前*/
+    .tname3 {
+      color: #FFF;
+      text-align: left;
+      font-size: 30px;
+      font-family: "游明朝体", "Yu Mincho", YuMincho, "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "MS P明朝", "MS PMincho", serif;
+      font-weight: bolder;
+      text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
+    }
+
+    .vname3 {
+      color: #FFF;
+      text-align: center;
+      font-size: 20px;
+      text-shadow: 0 0 3px #f00;
+      font-family: "游明朝体", "Yu Mincho", YuMincho, "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "MS P明朝", "MS PMincho", serif;
+      font-weight: bolder;
+      text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
+      width: 1920px;
+    }
+
+    .mname {
+      color: #FFF;
+      text-align: center;
+      font-size: 70px;
+      text-shadow: 0 0 3px #f00;
+      font-family: "游明朝体", "Yu Mincho", YuMincho, "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "MS P明朝", "MS PMincho", serif;
+      font-weight: bolder;
+      text-shadow: 0 0 3px #000, 0 0 3px #000;
+      width: 1920px;
+    }
+
+    .teamname {
+      color: #FFF;
+      text-align: center;
+      font-size: 40px;
+      text-shadow: 0 0 3px #f00;
+      font-family: "游明朝体", "Yu Mincho", YuMincho, "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "MS P明朝", "MS PMincho", serif;
+      font-weight: bolder;
+      text-shadow: 0 0 3px #000, 0 0 3px #000;
+      width: 1920px;
+    }
+
+    /* BGM */
+  </style>
+
+
+</head>
+
+
+<body>
+
+
+  <div>
+
+
+  <!-- キャラピック演出 -->
+  <div id="picdisp">
+    <img id="blackback" src="./img/valorantoverlay/black.png" style="opacity: 0; position: fixed;" />
+    <video id="video" controls="false" controls preload="auto" width="1920" height="1080" style="opacity: 0; position: fixed;">
+      <source id="movie1" src="./movie/キャラピック背景.webm" type="video/webm">
+    </video>
+
+    <img id="underblack" src="./img/valorantoverlay/下黒帯RAG.png" style="opacity: 0; position: fixed;" />
+    <img id="mapimg" src="./img/map/Ascent.png" style="opacity: 0; position: fixed;" />
+    <img id="mapwaku" src="./img/valorantoverlay/金枠.png" style="opacity: 0; position: fixed; margin-Top: 40px;" />
+    <img id="mapnamewaku" src="./img/valorantoverlay/マップ名枠RAG.png" style="opacity: 0; position: fixed; margin-Top: 20px;" />
+    <div id="mapname" style="opacity: 0; position: fixed;">
+      <div class="mname" style="position: fixed;">Ascent</div>
+    </div>
+    <img id="vs" src="./img/valorantoverlay/VS2.png" style="opacity: 0; position: fixed; margin-Top: 192px;" />
+    <img id="team1namewaku" src="./img/valorantoverlay/チーム枠RAG.png" style="opacity: 0; position: fixed;" />
+    <img id="team2namewaku" src="./img/valorantoverlay/チーム枠RAG.png" style="opacity: 0; position: fixed;" />
+    <div id="team1name" style="opacity: 0; position: fixed;">
+      <div class="teamname" style="position: fixed;">おまんぺこブラザーズ</div>
+    </div>
+    <div id="team2name" style="opacity: 0; position: fixed;">
+      <div class="teamname" style="position: fixed;">なるほどニャンキャッツ</div>
+    </div>
+
+    <img id="greenwaku" src="./img/valorantoverlay/緑枠.png" style="opacity: 0; position: fixed;" />
+
+    <!-- キャラピック演出 エージェントの立ち絵 -->
+    <div id="team1" style="position: fixed;">
+      <img id="paimg5" src="./img/エージェント立ち/Jett.png" width="650px" height="650px" style="opacity: 0; position: fixed;" />
+      <img id="paimg4" src="./img/エージェント立ち/Sova.png" width="650px" height="650px" style="opacity: 0; position: fixed;" />
+      <img id="paimg3" src="./img/エージェント立ち/Killjoy.png" width="650px" height="650px" style="opacity: 0; position: fixed;" />
+      <img id="paimg2" src="./img/エージェント立ち/Brimstone.png" width="650px" height="650px" style="opacity: 0; position: fixed;" />
+      <img id="paimg1" src="./img/エージェント立ち/Chamber.png" width="650px" height="650px" style="opacity: 0; position: fixed;" />
+    </div>
+    <div id="team2" style="position: fixed;">
+      <img id="paimg10" src="./img/エージェント立ち/Skye.png" width="650px" height="650px" style="opacity: 0; position: fixed; transform: scale(-1, 1);" />
+      <img id="paimg9" src="./img/エージェント立ち/Astra.png" width="650px" height="650px" style="opacity: 0; position: fixed; transform: scale(-1, 1);" />
+      <img id="paimg8" src="./img/エージェント立ち/Fade.png" width="650px" height="650px" style="opacity: 0; position: fixed; transform: scale(-1, 1);" />
+      <img id="paimg7" src="./img/エージェント立ち/KAYO.png" width="650px" height="650px" style="opacity: 0; position: fixed; transform: scale(-1, 1);" />
+      <img id="paimg6" src="./img/エージェント立ち/Reyna.png" width="650px" height="650px" style="opacity: 0; position: fixed; transform: scale(-1, 1);" />
+    </div>
+    <div id="pp3" style="position: fixed;">
+      <img id="ppimg11" src="./img/valorantoverlay/プレイヤー枠.png" width="149px" height="149px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg12" src="./img/valorantoverlay/プレイヤー枠.png" width="149px" height="149px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg13" src="./img/valorantoverlay/プレイヤー枠.png" width="149px" height="149px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg14" src="./img/valorantoverlay/プレイヤー枠.png" width="149px" height="149px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg15" src="./img/valorantoverlay/プレイヤー枠.png" width="149px" height="149px" style="opacity: 0; position: fixed;" />
+    </div>
+    <div id="pp4" style="position: fixed;">
+      <img id="ppimg16" src="./img/valorantoverlay/プレイヤー枠.png" width="149px" height="149px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg17" src="./img/valorantoverlay/プレイヤー枠.png" width="149px" height="149px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg18" src="./img/valorantoverlay/プレイヤー枠.png" width="149px" height="149px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg19" src="./img/valorantoverlay/プレイヤー枠.png" width="149px" height="149px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg20" src="./img/valorantoverlay/プレイヤー枠.png" width="149px" height="149px" style="opacity: 0; position: fixed;" />
+    </div>
+    <div id="pp1" style="position: fixed;">
+      <img id="ppimg1" src="./img/valorantoverlay/valorant.png" width="145px" height="180px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg2" src="./img/valorantoverlay/valorant.png" width="145px" height="180px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg3" src="./img/valorantoverlay/valorant.png" width="145px" height="180px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg4" src="./img/valorantoverlay/valorant.png" width="145px" height="180px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg5" src="./img/valorantoverlay/valorant.png" width="145px" height="180px" style="opacity: 0; position: fixed;" />
+    </div>
+    <div id="pp2" style="position: fixed;">
+      <img id="ppimg6" src="./img/valorantoverlay/valorant.png" width="145px" height="180px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg7" src="./img/valorantoverlay/valorant.png" width="145px" height="180px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg8" src="./img/valorantoverlay/valorant.png" width="145px" height="180px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg9" src="./img/valorantoverlay/valorant.png" width="145px" height="180px" style="opacity: 0; position: fixed;" />
+      <img id="ppimg10" src="./img/valorantoverlay/valorant.png" width="145px" height="180px" style="opacity: 0; position: fixed;" />
+    </div>
+  </div>
+  <!-- フラッシュ演出用の白い画像 -->
+  <img id="whiteback" src="./img/valorantoverlay/whiteback.png" style="opacity: 0; position: fixed;" />
+
+  <!-- マップムービー -->
+  <video id="video2" controls="false" controls preload="auto" width="1920" height="1080" style="opacity: 0; position: fixed;">
+    <source id="movie2" src="./movie/Ascent.webm" type="video/webm">
+  </video>
+
+  <!-- WIN動画 -->
+  <video id="video3" controls="false" controls preload="auto" width="1920" height="1080" style="opacity: 0; position: fixed;">
+    <source id="movie3" src="./movie/WINチーム.webm" type="video/webm">
+  </video>
+  <img id="winteam" src="./img/team/1.png" width="1125px" height="427px" style="opacity: 0; position: fixed;" />
+
+  <!-- キラ用ホワイト -->
+  <img id="whiteback" src="./img/valorantoverlay/whiteback.png" style="opacity: 0; position: fixed;" />
+
+  <!-- ミュートボタン -->
+  <button id="mute" class="btn btn-warning" style="position: fixed; margin: 65px 0 0 230px;"><i class="fas fa-volume-mute"></i></button><!-- .btn btn-warning -->
+
+
+
+
+  <!-- インポート --------------------------------------------->
+  <!-- firebase -->
+  <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-firestore.js"></script>
+  <!--firestoreのAPI連携の設定データ-->
+  <script src="/js/firebase-config.js"></script>
+
+  <!-- jquery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+
+  <script type="text/javascript">
+    //グローバルヘンスううううううううううううう-----------------
+    //----------------------------------------------------------
+
+
+
+    //ボタン
+    //バナー表示
+    function OnButtonClick() {
+      submitflag("1", "1");
+    }
+    //バナー非表示
+    function OnButtonClick2() {
+      submitflag("1", "0");
+      submitflag("w0", "1");
+    }
+    //プレイヤ－デス
+    function senddeath(name) {
+      submitflag("d" + name, "1");
+      submitflag("w" + name, "1");
+    }
+    //リセット
+    function resetbutton() {
+      console.log("リセット");
+      submitflag("2", "1");
+    }
+
+    function load() {
+      submitflag("3", "1");
+    }
+    //フラグリセット
+    function flgreset() {
+      for (var n = 0; n <= 10; n++) {
+        flagdelete(String(n));
+        flagdelete(String("d" + n));
+        flagdelete(String("w" + n));
+      }
+      flagdelete(String("m"));
+    }
+
+
+    //Pythonから受け取ったものをfirestoreに送る
+    function sendplayers(data) {
+      playerRef.doc(data).set({
+        no: "test",
+        playername: "test",
+        twitterid: "test",
+        rank: "test",
+        rankpoint: "test",
+        twitterurl: "test",
+        twittericonurl: "test"
+      })
+    }
+
+
+    //---------------------------------------
+    //ウィンドウが読み込まれたときに実行
+    //---------------------------------------
+    window.onload = function() {
+      //---------------------------------------
+      //配置設定
+      //---------------------------------------
+      //画像を表示する座標を設定するoffsetxとoffsetyは中心からの距離　（Aviutlの座標と同じ）
+      function picoption(picname, x, y, w, h) {
+        var targetImg = document.getElementById(picname); //対象のイメージを選択
+        targetImg.style.width = w; //画像の大きさを決める
+        targetImg.style.height = h; //画像の大きさを決める
+        var targetWidth = targetImg.offsetWidth; //画像の横幅を取得
+        var targetHeight = targetImg.offsetHeight; //画像の高さを取得
+        var offsetx = x;
+        var offsety = y;
+        targetImg.style.marginLeft = 960 - (targetWidth / 2) + offsetx + "px";
+        targetImg.style.marginTop = 540 - (targetHeight / 2) + offsety + "px";
+      }
+
+
+      //キャラピック時のプレイヤーアイコン座標
+      var px = [0, -485, -637, -333, -789, -181, 485, 333, 637, 181, 789]
+      for (var n = 1; n <= 10; n++) {
+        //エージェントピック画面のプレイヤーアイコン
+        picoption("ppimg" + n, px[n], 440);
+        picoption("ppimg" + (n+10), px[n], 435);
+      }
+
+
+      //エージェントピック画面-----------------------------
+      picoption("paimg1", -500, -20);
+      picoption("paimg2", -610, -80);
+      picoption("paimg3", -390, -80);
+      picoption("paimg4", -720, -140);
+      picoption("paimg5", -280, -140);
+      picoption("paimg6", 500, -20);
+      picoption("paimg7", 390, -80);
+      picoption("paimg8", 610, -80);
+      picoption("paimg9", 280, -140);
+      picoption("paimg10", 720, -140);
+
+      picoption("mapimg", 0, -90);
+      picoption("mapname", -960, -502);
+      picoption("mapnamewaku", 0, -450);
+      picoption("team1namewaku", -485, 280);
+      picoption("team2namewaku", 485, 280);
+      picoption("team1name", -485 - 960, 252);
+      picoption("team2name", 485 - 960, 252);
+      picoption("vs", 0, 380);
+
+      picoption("winteam", 0, 20);
+    }
+
+    //---------------------------------------
+    //ウィンドウが読み込み終わったときに実行
+    //---------------------------------------
+    window.addEventListener('DOMContentLoaded', function() {
+      //firestoreからデータを取得※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+
+      playerupdate();
+
+    });
+
+
+
+
+
+    // 日付をYYYYMMDDの書式で返すメソッド
+    function formatDate(dt) {
+      var y = dt.getFullYear();
+      var m = ('00' + (dt.getMonth() + 1)).slice(-2);
+      var d = ('00' + dt.getDate()).slice(-2);
+      return (y + m + d);
+    }
+    // 日付をMMSSの書式で返すメソッド
+    function formatDate(dt) {
+      var y = dt.getFullYear();
+      var m = ('00' + (dt.getMonth() + 1)).slice(-2);
+      var d = ('00' + dt.getDate()).slice(-2);
+      return (y + m + d);
+    }
+
+    //今日の日付
+    var today = formatDate(new Date());
+
+    //---------------------------------------
+    //ドキュメントを作る（ドキュメント名を決める）
+    //---------------------------------------
+    var collectioname = "VALORANT";
+    var documentname1 = "flag";
+    var documentname2 = "playerlist";
+
+    //---------------------------------------
+    // Firestoreの準備
+    //---------------------------------------
+    // Firestoreのインスタンス作成
+    var db = firebase.firestore();
+
+    // ドキュメントのリファレンス取得
+    var flagRef = db.collection(collectioname).doc(documentname1).collection("VALORANT");
+    var playerRef = db.collection(collectioname).doc(documentname2).collection("VALORANT");
+
+    dofirestore(flagRef);
+    dofirestore(playerRef);
+
+    /**
+     * 同期処理
+     **/
+    //firestoreのデータを操作するおまじない
+    function dofirestore(Ref) {
+      //"ask"でポイントの小さい順に並べ替えを要求してる（askが昇順、ascが降順）
+      //フラグデータを操作
+      Ref.limit(100).onSnapshot((snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+
+          kousin(); //データベースに何かしら変更があったときに実行される
+
+          // 追加
+          if (change.type === 'added') {
+            console.log("追加");
+          }
+          // 更新
+          else if (change.type === 'modified') {
+            console.log("更新");
+          }
+          // 削除
+          else if (change.type === 'removed') {
+            console.log("削除");
+          }
+        });
+      });
+    }
+
+
+    //フラグデータ削除
+    function flagdelete(num) {
+      flagRef.doc(num).delete().then(function() {
+        console.log(num, " のフラグを削除しました");
+      }).catch(function(error) {
+        console.error("Error removing document: ", error);
+      });
+    }
+
+    // メッセージをfirestoreへ送信
+    function submitflag(fname, flg) {
+      flagRef.doc(fname).set({
+        name: fname,
+        flag: flg,
+        date: new Date()
+      })
+      console.log(fname, " のフラグが" + flg + "になりました");
+    }
+
+
+    var startflg = 0;
+
+    function kousin() {
+      flagRef.orderBy('flag', "asc").limit(100).get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var data = doc.data();
+          if (data.name == "3" && data.flag == "1") {
+            playerupdate();
+            setTimeout(function() {
+              flagdelete("3");
+            }, 500);
+          }
+
+          if (data.name == "m" && data.flag == "1") {
+            mplay();
+            mplay2();
+            setTimeout(function() {
+              flagdelete(String("m"));
+            }, 500);
+          }
+          if (data.name == "m" && data.flag == "2") {
+            mplay2();
+            setTimeout(function() {
+              flagdelete(String("m"));
+            }, 500);
+          }
+          //どっちが勝ったか
+          if (data.name == "win") {
+            var winx = Number(data.flag);
+            if (winx >=1 && winx <=50) {
+              console.log("winのフラグが"+data.flag+"だったよ");
+              $("#winteam").attr('src', "./img/team/t" + data.flag + ".png");
+              submitflag("win", "0");
+              setTimeout(function() {
+                submitflag("m", "2"); //勝利ムービー再生
+              }, 500);
+            }
+          }
+        });
+      })
+    }
+
+    //プレイヤーデータをfirestoreから取得-------------------
+    //------------------------------------------------------
+    var pnlist = {}; //プレイヤーネーム
+    var vnlist = {}; //ヴァロラントネーム
+    var piconlist = {}; //TwitterアイコンURL
+    var agentlist = {}; //エージェント
+
+    function playerupdate() {
+      playerRef.orderBy('no', "asc").limit(10).get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var data = doc.data();
+          var n = data.no; //no（ナンバー）を変数nに代入
+          pnlist[n] = data.playername
+          vnlist[n] = data.valorantname
+          piconlist[n] = data.twittericonurl
+          agentlist[n] = data.agent
+
+          //HTMLを書き換えていく
+          $("#paimg" + n).attr('src', "./img/エージェント立ち/" + agentlist[n] + ".png");
+          $("#ppimg" + n).attr('src', "./img/team/player/" + pnlist[n] + ".png");
+
+        });
+      })
+      flagRef.get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var data = doc.data();
+          if (data.name == "team1name") {
+            $("#team1name").children().html(data.value); //HTMLを書き換える
+          }
+          if (data.name == "team2name") {
+            $("#team2name").children().html(data.value); //HTMLを書き換える
+          }
+          if (data.name == "mapname") {
+            $("#mapname").children().html(data.value); //HTMLを書き換える
+            $("#mapimg").attr('src', "./img/map/" + data.value + ".png");
+            //ビデオの内容を更新
+            video2.src = "./movie/" + data.value + ".webm";
+            video2.load();
+          }
+        });
+      })
+    }
+
+
+    //BGM再生----------------------------------------------------------
+    'use strict';
+
+    // 要素
+    const music = new Audio('music/fade3.mp3');
+    const volumeUp = document.getElementById('volume-up');
+    const volumeDown = document.getElementById('volume-down');
+    const mute = document.getElementById('mute');
+
+    //音量設定
+    music.volume = 0.8;
+
+    //ビデオのUIを消す
+    const video = document.querySelector('#video');
+    video.controls = false;
+
+    const video2 = document.querySelector('#video2');
+    video2.controls = false;
+
+    const video3 = document.querySelector('#video3');
+    video3.controls = false;
+
+
+
+
+
+    // 再生ボタンが押されたとき
+    function mplay() {
+      if (!music.paused) {
+        music.pause();
+        video.pause();
+        video2.pause();
+        music.currentTime = 0; //BGMの再生を初期位置へ
+        video.currentTime = 0; //ビデオの再生位置を初期化
+        video2.currentTime = 0; //ビデオの再生位置を初期化
+        resettimer();
+      } else {
+        ontimer();
+        music.play();
+      }
+    }
+
+    function mplay2() {
+      if (!music.paused) {
+        video3.pause();
+        video3.currentTime = 0; //ビデオの再生位置を初期化
+        resettimer2();
+      } else {
+        ontimer2();
+      }
+    }
+
+    // ミュートボタン
+    mute.addEventListener('click', function() {
+      mmute();
+    });
+
+    mmute();
+
+    function mmute() {
+      if (music.muted) {
+        music.muted = false;
+        mute.innerHTML = '<i class="fas fa-volume-mute">';
+        hidebutton(); //ボタンを全部消す
+      } else {
+        music.muted = true;
+        mute.innerHTML = '<i class="fas fa-volume-up"></i>';
+      }
+    }
+
+    function hidebutton() {
+      //ボタンを全部消す
+      $('#mute').css({
+        opacity: '0'
+      });
+    }
+
+    //アニメーションさせる関数
+    function animeon(target, classname) {
+      //クラスを付与してアニメーションさせて、そのクラスはすぐに削除
+      document.getElementById(target).classList.add(classname);
+      document.getElementById(target).classList.remove(classname);
+    }
+
+    var timerID = [];
+    var timerID2 = [];
+    var kasoku = 0;
+    //タイマー------------------------------
+    function ontimer() {
+      //76秒後に暗転
+      timerID[1] = setTimeout(function() {
+        document.getElementById("blackback").classList.add("fade02s"); //フェードイン0.2秒
+      }, 76350-kasoku);
+      //77秒後にビデオフェードインさせて再生
+      timerID[2] = setTimeout(function() {
+        document.getElementById("video").classList.add("opacity1"); //表示
+        video.play();
+      }, 77000-kasoku);
+      //マップフェードイン
+      timerID[3] = setTimeout(function() {
+        document.getElementById("mapimg").classList.add("fade2s"); //フェードイン2秒
+        document.getElementById("mapwaku").classList.add("fade2s"); //フェードイン2秒
+        document.getElementById("underblack").classList.add("fade2s"); //フェードイン2秒
+      }, 81000-kasoku);
+      //マップ名フェードイン
+      timerID[4] = setTimeout(function() {
+        document.getElementById("mapname").classList.add("fade05s05t"); //フェードイン0.5秒 0.5遅延
+        document.getElementById("mapnamewaku").classList.add("wipeC"); //
+      }, 81600-kasoku);
+      //フラッシュ
+      timerID[5] = setTimeout(function() {
+        document.getElementById("whiteback").classList.add("kira"); //キラっと光る
+      }, 82800-kasoku);
+      //フラッシュを消す
+      timerID[6] = setTimeout(function() {
+        document.getElementById("whiteback").classList.remove("kira");//キラを削除
+      }, 84800-kasoku);
+
+      //ピックキャラ表示
+      timerID[7] = setTimeout(function() {
+        document.getElementById("paimg1").classList.add("don"); //ドンっ！と表示
+        document.getElementById("ppimg1").classList.add("downfade"); //ドンっ！と表示
+        //document.getElementById("ppimg11").classList.add("downfade"); //ドンっ！と表示
+      }, 83600-kasoku);
+      timerID[8] = setTimeout(function() {
+        document.getElementById("paimg2").classList.add("don"); //ドンっ！と表示
+        document.getElementById("ppimg2").classList.add("downfade"); //ドンっ！と表示
+        //document.getElementById("ppimg12").classList.add("downfade"); //ドンっ！と表示
+      }, 84200-kasoku);
+      timerID[9] = setTimeout(function() {
+        document.getElementById("paimg3").classList.add("don"); //ドンっ！と表示
+        document.getElementById("ppimg3").classList.add("downfade"); //ドンっ！と表示
+        //document.getElementById("ppimg13").classList.add("downfade"); //ドンっ！と表示
+      }, 84800-kasoku);
+      timerID[10] = setTimeout(function() {
+        document.getElementById("paimg4").classList.add("don"); //ドンっ！と表示
+        document.getElementById("ppimg4").classList.add("downfade"); //ドンっ！と表示
+        //document.getElementById("ppimg14").classList.add("downfade"); //ドンっ！と表示
+      }, 85400-kasoku);
+      timerID[11] = setTimeout(function() {
+        document.getElementById("paimg5").classList.add("don"); //ドンっ！と表示
+        document.getElementById("ppimg5").classList.add("downfade"); //ドンっ！と表示
+        //document.getElementById("ppimg15").classList.add("downfade"); //ドンっ！と表示
+      }, 86000-kasoku);
+      timerID[12] = setTimeout(function() {
+        document.getElementById("team1namewaku").classList.add("wipeL"); //左からワイプ
+      }, 86600-kasoku);
+      timerID[13] = setTimeout(function() {
+        document.getElementById("team1name").classList.add("don"); //フェードイン2秒
+      }, 87800-100-kasoku);
+      timerID[14] = setTimeout(function() {
+
+      }, 87800-kasoku);
+      timerID[15] = setTimeout(function() {
+        document.getElementById("paimg6").classList.add("donR"); //ドンっ！と表示
+        document.getElementById("ppimg6").classList.add("downfade"); //ドンっ！と表示
+        //document.getElementById("ppimg16").classList.add("downfade"); //ドンっ！と表示
+      }, 88400-kasoku);
+      timerID[16] = setTimeout(function() {
+        document.getElementById("paimg7").classList.add("donR"); //ドンっ！と表示
+        document.getElementById("ppimg7").classList.add("downfade"); //ドンっ！と表示
+        //document.getElementById("ppimg17").classList.add("downfade"); //ドンっ！と表示
+      }, 89000-kasoku);
+      timerID[17] = setTimeout(function() {
+        document.getElementById("paimg8").classList.add("donR"); //ドンっ！と表示
+        document.getElementById("ppimg8").classList.add("downfade"); //ドンっ！と表示
+        //document.getElementById("ppimg18").classList.add("downfade"); //ドンっ！と表示
+      }, 89600-kasoku);
+      timerID[18] = setTimeout(function() {
+        document.getElementById("paimg9").classList.add("donR"); //ドンっ！と表示
+        document.getElementById("ppimg9").classList.add("downfade"); //ドンっ！と表示
+        //document.getElementById("ppimg19").classList.add("downfade"); //ドンっ！と表示
+      }, 90200-kasoku);
+      timerID[19] = setTimeout(function() {
+        document.getElementById("paimg10").classList.add("donR"); //ドンっ！と表示
+        document.getElementById("ppimg10").classList.add("downfade"); //ドンっ！と表示
+        //document.getElementById("ppimg20").classList.add("downfade"); //ドンっ！と表示
+      }, 90800-kasoku);
+      timerID[20] = setTimeout(function() {
+        document.getElementById("team2namewaku").classList.add("wipeL"); //左からワイプ
+      }, 91400-kasoku);
+      timerID[21] = setTimeout(function() {
+        document.getElementById("team2name").classList.add("don"); //フェードイン2秒
+      }, 92600-100-kasoku);
+      timerID[22] = setTimeout(function() {
+        document.getElementById("whiteback").classList.add("kira"); //キラっと光る
+        document.getElementById("vs").classList.add("don"); //ドンっ！と表示
+      }, 93200-kasoku);
+      timerID[23] = setTimeout(function() {
+        document.getElementById("blackback").classList.remove("fade02s");
+        document.getElementById("video").classList.remove("opacity1");
+        document.getElementById("mapname").classList.remove("fade05s05t");
+        document.getElementById("mapnamewaku").classList.remove("wipeC");
+        document.getElementById("mapimg").classList.remove("fade2s");
+        document.getElementById("mapwaku").classList.remove("fade2s");
+        document.getElementById("whiteback").classList.remove("kira");
+        document.getElementById("underblack").classList.remove("fade2s");
+        document.getElementById("whiteback").classList.remove("kira");
+        document.getElementById("vs").classList.remove("don");
+        document.getElementById("team1namewaku").classList.remove("wipeL");
+        document.getElementById("team1name").classList.remove("don");
+        document.getElementById("team2namewaku").classList.remove("wipeL");
+        document.getElementById("team2name").classList.remove("don");
+        for (var n=1; n<=10; n++){
+          document.getElementById("paimg"+n).classList.remove("don");
+          document.getElementById("paimg"+n).classList.remove("donR");
+          document.getElementById("ppimg"+n).classList.remove("downfade");
+          document.getElementById("ppimg"+(n+10)).classList.remove("downfade");
+        }
+      }, 108000-kasoku);
+      timerID[24] = setTimeout(function() {
+        document.getElementById("video2").classList.add("fade2s"); //表示
+        video2.play();
+      }, 102500-kasoku);
+      timerID[25] = setTimeout(function() {
+        document.getElementById("video2").classList.remove("fade2s");
+        document.getElementById("video2").classList.add("imageoff"); //フェードアウト
+      }, 140300-kasoku);
+      timerID[25] = setTimeout(function() {
+        document.getElementById("video2").classList.remove("imageoff"); //フェードアウト削除
+      }, 145500-kasoku);
+    }
+
+    //タイマー------------------------------
+    function ontimer2() {
+      //ビデオを再生
+      timerID2[1] = setTimeout(function() {
+        $("#video3").css({'opacity': '1'}); //表示
+        video3.play();
+      }, 1);
+      //フラッシュ
+      timerID2[2] = setTimeout(function() {
+        $("#winteam").css({'opacity': '1'});
+        document.getElementById("whiteback").classList.add("kira"); //キラっと光る
+      }, 2110);
+      //フラッシュを消す
+      timerID2[3] = setTimeout(function() {
+        document.getElementById("whiteback").classList.remove("kira");//キラを削除
+      }, 2500);
+      timerID2[4] = setTimeout(function() {
+        $("#winteam").css({'opacity': '0'});
+      }, 6150);
+      timerID2[5] = setTimeout(function() {
+        $("#video3").css({'opacity': '0'});
+      }, 10000);
+    }
+
+
+    function resettimer() {
+      for (var i = 0; i < timerID.length; i++) {
+        clearTimeout(timerID[i]);
+      }
+    }
+    function resettimer2() {
+      for (var i = 0; i < timerID2.length; i++) {
+        clearTimeout(timerID2[i]);
+      }
+    }
+  </script>
+
+</body>
+
+</html>
