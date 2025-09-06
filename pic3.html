@@ -725,34 +725,7 @@
     //ウィンドウが読み込まれたときに実行
     //---------------------------------------
     window.onload = function() {
-      //---------------------------------------
-      //配置設定
-      //---------------------------------------
-      //画像を表示する座標を設定するoffsetxとoffsetyは中心からの距離　（Aviutlの座標と同じ）
-      function picoption(picname, x, y, w, h) {
-        var targetImg = document.getElementById(picname); //対象のイメージを選択
-        targetImg.style.width = w; //画像の大きさを決める
-        targetImg.style.height = h; //画像の大きさを決める
-        var targetWidth = targetImg.offsetWidth; //画像の横幅を取得
-        var targetHeight = targetImg.offsetHeight; //画像の高さを取得
-        var offsetx = x;
-        var offsety = y;
-        targetImg.style.marginLeft = 960 - (targetWidth / 2) + offsetx + "px";
-        targetImg.style.marginTop = 540 - (targetHeight / 2) + offsety + "px";
-      }
 
-      //エージェントピック画面-----------------------------
-
-      picoption("mapimg", 0, -90);
-      picoption("mapname", -960, -502);
-      picoption("mapnamewaku", 0, -450);
-      picoption("team1namewaku", -485, 280);
-      picoption("team2namewaku", 485, 280);
-      picoption("team1name", -485 - 960, 252);
-      picoption("team2name", 485 - 960, 252);
-      picoption("vs", 0, 380);
-
-      picoption("winteam", 0, 20);
     }
 
     //---------------------------------------
@@ -1184,6 +1157,7 @@
 </body>
 
 </html>
+
 
 
 
