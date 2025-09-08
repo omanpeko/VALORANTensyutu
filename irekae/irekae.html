@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet"> <!--☓マークのフォント-->
+  <link rel="stylesheet" href="popup.css"><!--ポップアップのデザインCSS-->
+  <!-- インポート --------------------------------------------->
+  <!-- firebase -->
+  <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-firestore.js"></script>
+  <!--firestoreのAPI連携の設定データ-->
+  <script src="/js/firebase-config.js"></script>
+
+  <title>エージェントピックツール</title>
+
+  <!-- bootstrap ドロップダウンに使う -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+
+  <style>
+    body {line-height: 100%; white-space: nowrap;}
+    table { border : solid 1px #000000 ; border-collapse: collapse; min-height:580px;}
+    th,td {  height : 100px ; text-align:center; }
+    th { background-color: #40FAE0 ; height : 25px ;}
+    .th2 { background-color: #F04040 ; height : 25px ;}
+    tr{  background-color: #FFFFFF }
+
+
+    .ui-state-highlight { background-color: #BBFFDD; height:16px; }
+    .ui-state-highlight2 { background-color: #ffAAAA; height:16px; }
+    .dsp_no{ width:40px; }
+    .dsp_no2{ width:40px; }
+    .t_icon{ width:100px; padding-top: 5px;}
+    .p_name{ width:150px; }
+    #sortable button,#sortable2 button{
+      color: #10CAA0;
+      padding:5px 15px;
+      font-weight: bold;
+      border-radius: 25px;
+      border: solid 2px #10CAA0;
+      background-color: #FFF;
+      transition: .4s;
+    }
+    #sortable button:hover,#sortable2 button:hover {
+      background: #BBFFDD;
+    }
+    #sortable2 button{ color: #F04040; border: solid 2px #F04040; }
+    #sortable2 button:hover{ background: #ffAAAA; }
+    .button2{
+      color: #1080AA;
+      padding:5px 15px;
+      font-weight: bold;
+      border-radius: 25px;
+      border: solid 2px #1080AA;
+      background-color: #FFF;
+      transition: .4s;
+    }
+    .button2:hover{
+      background: #CCEEFF;
+    }
+
+    /* エージェントピックホバー */
+    .hover-1 img{
+      border: 0 solid #fff;
+      width:80px;
+      height:80px;
+    }
+    .hover-1 img:hover{
+      border:2px solid #ff0000;
+      width:80px;
+      height:80px;
+    }
+
+  </style>
+
+  <script type="text/javascript" src="./js/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="./js/jquery-ui-1.13.1/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="./js/jquery-ui-touch-punch-master/jquery.ui.touch-punch.min.js"></script>
+
+  <!-- bootstrap -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+<h3>エージェントを選択  　マップセレクト</h3>
+
+<!-- マップのドロップダウン -->
+<div class="dropdown" style="position:fixed; left:250px; margin-top:-6px;">
+	<button id="mapbutton" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" style=" width:150px;">マップ <span class="caret"></span></button>
+	<ul class="dropdown-menu" role="menu">
+		<li role="presentation"><a onclick="mapselect('Ascent','アセント');">アセント</a></li>
+		<li role="presentation"><a onclick="mapselect('Bind','バインド');">バインド</a></li>
+		<li role="presentation"><a onclick="mapselect('Breeze','ブリーズ');">ブリーズ</a></li>
+    <li role="presentation"><a onclick="mapselect('Fracture','フラクチャー');">フラクチャー</a></li>
+    <li role="presentation"><a onclick="mapselect('Haven','ヘイブン');">ヘイブン</a></li>
+    <li role="presentation"><a onclick="mapselect('Icebox','アイスボックス');">アイスボックス</a></li>
+    <li role="presentation"><a onclick="mapselect('Pearl','パール');">パール</a></li>
+    <li role="presentation"><a onclick="mapselect('Split','スプリット');">スプリット</a></li>
+    <li role="presentation"><a onclick="mapselect('Lotus','ロータス');">ロータス</a></li>
+    <li role="presentation"><a onclick="mapselect('Sunset','サンセット');">サンセット</a></li>
+	</ul>
+</div>
+
+<!-- 選択マップ -->
+<div style="position:fixed; left:450px; margin-top:-35px;">
+  <img  id="mapimg" src=""  width="150px" height="85px">
+</div>
+
+<button id="button11" class="button2" onclick="OnButtonClick(11);" type="button" style=" position:float; margin-left:20px; margin-top:-10px; margin-right:20px;">一括キャラピック</button>
+<br><br>
+<p1>メンバーを入れ替え終わってから キャラを選択してください　</p1>
+<h3 style="margin-left:5px;">ディフェンダー（ロビーでは右）</h3>
+<h3 style="position: fixed; margin-left:575px; margin-top:-35px;">アタッカー（ロビーでは左）</h3>
+<button id="buttonf" class="button2" onclick="loadfirestore();" type="button" style="position: fixed; margin-left:10px; margin-top:580px;">読み込み</button>
+<button id="buttona" class="button2" onclick="sendagent();" type="button" style="position: fixed; margin-left:120px; margin-top:580px;">　送信　</button>
+
+<div class="entry-content">
+<link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+<div class="container">
+<div class="popup" id="js-popup">
+  <div class="popup-inner" style="margin-top:-10px;">
+    <div class="close-btn" id="js-close-btn" onclick="OnButtonClick(0);"><i class="fas fa-times"></i></div>
+    <a class="hover-1"><img src="./img/agent/Astra_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Astra_icon.png');"></a>
+    <a class="hover-1"><img src="./img/agent/Omen_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Omen_icon.png');"></a>
+    <a class="hover-1"><img src="./img/agent/Brimstone_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Brimstone_icon.png');"></a>
+    <a class="hover-1"><img src="./img/agent/Viper_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Viper_icon.png');"></a>
+    <br><br><br><br><br><br>
+    <a class="hover-1"><img src="./img/agent/Breach_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Breach_icon.png');"></a>
+    <a class="hover-1"><img src="./img/agent/KAYO_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/KAYO_icon.png');"></a>
+    <a class="hover-1"><img src="./img/agent/Sage_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Sage_icon.png');"></a>
+    <a class="hover-1"><img src="./img/agent/Deadlock_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Deadlock_icon.png');"></a>
+    <br><br><br><br><br><br>
+    <a class="hover-1"><img src="./img/agent/Chamber_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Chamber_icon.png');"></a>
+    <a class="hover-1"><img src="./img/agent/Cypher_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Cypher_icon.png');"></a>
+    <a class="hover-1"><img src="./img/agent/Killjoy_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Killjoy_icon.png');"></a>
+    <br><br><br><br><br><br>
+    <a class="hover-1"><img src="./img/agent/Fade_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Fade_icon.png');"></a>
+    <a class="hover-1"><img src="./img/agent/Skye_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Skye_icon.png');"></a>
+    <a class="hover-1"><img src="./img/agent/Sova_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Sova_icon.png');"></a>
+    <br><br><br><br><br><br>
+    <a class="hover-1"><img src="./img/agent/Jett_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Jett_icon.png');"></a>
+    <a class="hover-1"><img src="./img/agent/Neon_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Neon_icon.png');"></a>
+    <a class="hover-1"><img src="./img/agent/Phoenix_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Phoenix_icon.png');"></a>
+    <a class="hover-1"><img src="./img/agent/Raze_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Raze_icon.png');"></a>
+    <br><br><br><br><br><br>
+    <a class="hover-1"><img src="./img/agent/Reyna_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Reyna_icon.png');"></a>
+    <a class="hover-1"><img src="./img/agent/Yoru_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Yoru_icon.png');"></a>
+    <a class="hover-1"><img src="./img/agent/Gekko_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Gekko_icon.png');"></a>
+    <a class="hover-1"><img src="./img/agent/Harbor_icon.png" alt="ポップアップ画像" onclick="changepic('./img/agent/Harbor_icon.png');"></a>
+
+  </div>
+  <div class="black-background" id="js-black-bg" onclick="OnButtonClick(0);"></div>
+</div>
+
+
+
+
+<table style="margin-top:-5px; margin-left:-20px;">
+    <thead>
+        <tr >
+            <th>番号</th>
+            <th>アイコン</th>
+            <th>名前</th>
+            <th>エージェント</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="sortable" style="background-color: #FFFFFF">
+        <tr>
+            <td id="p1no" class="dsp_no">1</td>
+            <td class="t_icon"><img id="p1icon" src="./img/valorantoverlay/valorant.png" alt="ERR" width="100" height="100" border="0"></td>
+            <td id="p1name" class="p_name">Player1</td>
+            <td ><img id="p1pic" src="./img/valorantoverlay/White.png" width="100" height="100"> </td>
+            <td class="btn"><button id="button1" onclick="OnButtonClick(1);" type="button" style=" margin-left:20px; margin-top:-10px; margin-right:20px;">キャラピック</button></td>
+        </tr>
+        <tr>
+            <td id="p2no" class="dsp_no">2</td>
+            <td class="t_icon"><img id="p2icon" src="./img/valorantoverlay/valorant.png" alt="ERR" width="100" height="100" border="0"></td>
+            <td id="p2name" class="p_name">Player2</td>
+            <td><img id="p2pic" src="./img/valorantoverlay/White.png" width="100" height="100"> </td>
+            <td><button id="button2" onclick="OnButtonClick(2);" type="button" style=" margin-left:20px; margin-top:-10px; margin-right:20px;">キャラピック</button></td>
+        </tr>
+        <tr>
+            <td id="p3no" class="dsp_no">3</td>
+            <td class="t_icon"><img id="p3icon" src="./img/valorantoverlay/valorant.png" alt="ERR" width="100" height="100" border="0"></td>
+            <td id="p3name" class="p_name">Player3</td>
+            <td><img id="p3pic" src="./img/valorantoverlay/White.png" width="100" height="100"> </td>
+            <td><button id="button3" onclick="OnButtonClick(3);" type="button" style=" margin-left:20px; margin-top:-10px; margin-right:20px;">キャラピック</button></td>
+        </tr>
+        <tr>
+            <td id="p4no" class="dsp_no">4</td>
+            <td class="t_icon"><img id="p4icon" src="./img/valorantoverlay/valorant.png" alt="ERR" width="100" height="100" border="0"></td>
+            <td id="p4name" class="p_name">Player4</td>
+            <td><img id="p4pic" src="./img/valorantoverlay/White.png" width="100" height="100"> </td>
+            <td><button id="button4" onclick="OnButtonClick(4);" type="button" style=" margin-left:20px; margin-top:-10px; margin-right:20px;">キャラピック</button></td>
+        </tr>
+        <tr>
+            <td id="p5no" class="dsp_no">5</td>
+            <td class="t_icon"><img id="p5icon" src="./img/valorantoverlay/valorant.png" alt="ERR" width="100" height="100" border="0"></td>
+            <td id="p5name" class="p_name">Player5</td>
+            <td><img id="p5pic" src="./img/valorantoverlay/White.png" width="100" height="100"> </td>
+            <td><button id="button5" onclick="OnButtonClick(5);" type="button" style=" margin-left:20px; margin-top:-10px; margin-right:20px;">キャラピック</button></td>
+        </tr>
+    </tbody>
+</table>
+
+
+<table style="margin-left:580px; margin-top:-580px;">
+    <thead>
+        <tr>
+            <th class="th2">番号</th>
+            <th class="th2">アイコン</th>
+            <th class="th2">名前</th>
+            <th class="th2">エージェント</th>
+            <th class="th2"> </th>
+        </tr>
+    </thead>
+    <tbody id="sortable2" style="background-color: #FFFFFF;">
+        <tr>
+            <td id="p6no" class="dsp_no2">6</td>
+            <td class="t_icon"><img id="p6icon" src="./img/valorantoverlay/valorant.png" alt="ERR" width="100" height="100" border="0"></td>
+            <td id="p6name" class="p_name">Player6</td>
+            <td><img id="p6pic" src="./img/valorantoverlay/White.png" width="100" height="100"> </td>
+            <td><button id="button6" onclick="OnButtonClick(6);" type="button" style=" margin-left:20px; margin-top:-10px; margin-right:20px;">キャラピック</button></td>
+        </tr>
+        <tr>
+            <td id="p7no" class="dsp_no2">7</td>
+            <td class="t_icon"><img id="p7icon" src="./img/valorantoverlay/valorant.png" alt="ERR" width="100" height="100" border="0"></td>
+            <td id="p7name" class="p_name">Player7</td>
+            <td><img id="p7pic" src="./img/valorantoverlay/White.png" width="100" height="100"> </td>
+            <td><button id="button7" onclick="OnButtonClick(7);" type="button" style=" margin-left:20px; margin-top:-10px; margin-right:20px;">キャラピック</button></td>
+        </tr>
+        <tr>
+            <td id="p8no" class="dsp_no2">8</td>
+            <td class="t_icon"><img id="p8icon" src="./img/valorantoverlay/valorant.png" alt="ERR" width="100" height="100" border="0"></td>
+            <td id="p8name" class="p_name">Player8</td>
+            <td><img id="p8pic" src="./img/valorantoverlay/White.png" width="100" height="100"> </td>
+            <td><button id="button8" onclick="OnButtonClick(8);" type="button" style=" margin-left:20px; margin-top:-10px; margin-right:20px;">キャラピック</button></td>
+        </tr>
+        <tr>
+            <td id="p9no" class="dsp_no2">9</td>
+            <td class="t_icon"><img id="p9icon" src="./img/valorantoverlay/valorant.png" alt="ERR" width="100" height="100" border="0"></td>
+            <td id="p9name" class="p_name">Player9</td>
+            <td><img id="p9pic" src="./img/valorantoverlay/White.png" width="100" height="100"> </td>
+            <td><button id="button9" onclick="OnButtonClick(9);" type="button" style=" margin-left:20px; margin-top:-10px; margin-right:20px;">キャラピック</button></td>
+        </tr>
+        <tr>
+            <td id="p10no" class="dsp_no2">10</td>
+            <td class="t_icon"><img id="p10icon" src="./img/valorantoverlay/valorant.png" alt="ERR" width="100" height="100" border="0"></td>
+            <td id="p10name" class="p_name">Player10</td>
+            <td><img id="p10pic" src="./img/valorantoverlay/White.png" width="100" height="100"> </td>
+            <td><button id="button10" onclick="OnButtonClick(10);" type="button" style=" margin-left:20px; margin-top:-10px; margin-right:20px;">キャラピック</button></td>
+        </tr>
+    </tbody>
+</table>
+
+<script>
+
+$( function() {
+    $( "#sortable" ).sortable({
+      revert: true,
+      cursor: 'move',
+      opacity: 0.9,
+      placeholder: 'ui-state-highlight'
+    });
+
+    $( "#sortable" ).disableSelection();
+
+    $('#sortable').on('sortstop', function (e, ui) {
+    // ソートが完了したら実行される。
+    var rows = $('#sortable .dsp_no');
+    for (var i = 0, rowTotal = rows.length; rowTotal > i ; i += 1) {
+        $($('.dsp_no')[i]).text(i + 1);
+    }
+    });
+
+} );
+
+$( function() {
+    $( "#sortable2" ).sortable({
+      revert: true,
+      cursor: 'move',
+      opacity: 0.9,
+      placeholder: 'ui-state-highlight2'
+    });
+
+    $( "#sortable2" ).disableSelection();
+
+    $('#sortable2').on('sortstop', function (e, ui) {
+    // ソートが完了したら実行される。
+    var rows = $('#sortable2 .dsp_no2');
+    for (var i = 0, rowTotal = rows.length; rowTotal > i ; i += 1) {
+        $($('.dsp_no2')[i]).text(i + 1+5);
+    }
+    });
+
+} );
+
+var p = 0;
+
+function OnButtonClick(x){
+  var popup = document.getElementById('js-popup');
+  if(!popup) return;
+  popup.classList.toggle('is-show');
+  p = x;
+}
+
+//個別にピックエージェントを変える場合
+function changepic(imgname){
+  if (p == 1){
+    document.getElementById('p1pic').src=imgname;
+  }
+  if (p == 2){
+    document.getElementById('p2pic').src=imgname;
+  }
+  if (p == 3){
+    document.getElementById('p3pic').src=imgname;
+  }
+  if (p == 4){
+    document.getElementById('p4pic').src=imgname;
+  }
+  if (p == 5){
+    document.getElementById('p5pic').src=imgname;
+  }
+  if (p == 6){
+    document.getElementById('p6pic').src=imgname;
+  }
+  if (p == 7){
+    document.getElementById('p7pic').src=imgname;
+  }
+  if (p == 8){
+    document.getElementById('p8pic').src=imgname;
+  }
+  if (p == 9){
+    document.getElementById('p9pic').src=imgname;
+  }
+  if (p == 10){
+    document.getElementById('p10pic').src=imgname;
+  }
+
+  //連続ピックの場合
+  if (p>=11){
+    pn = p-10;
+    // 指定したid属性のHTML要素を取得
+    if (pn <= 5){
+      var list_element = document.getElementById("sortable");
+    }
+    else{
+      var list_element = document.getElementById("sortable2");
+      pn=pn-5;
+    }
+
+    // trのn番目の tdの４つ目の img 要素を取得
+    let s_element = list_element.querySelector('tr:nth-child('+pn+') td:nth-child(4) img');
+
+    //画像を差し替える
+    s_element.src = imgname;
+  }
+
+
+
+  p = p+1;
+
+  //個別ピックの場合は判定pをリセット
+  if (p <= 10 || p>20){
+    var popup = document.getElementById('js-popup');
+    if(!popup) return;
+    popup.classList.toggle('is-show');
+    p = 0;
+  }
+}
+
+var mapname ;
+function mapselect(mapeng,mapjpn){
+  mapname = mapeng;
+  $("#mapbutton").html(mapjpn+' <span class="caret"></span>');
+  $("#mapimg").attr('src', "./img/map/" + mapname + ".png");
+}
+
+// 日付をYYYYMMDDの書式で返すメソッド
+function formatDate(dt) {
+  var y = dt.getFullYear();
+  var m = ('00' + (dt.getMonth()+1)).slice(-2);
+  var d = ('00' + dt.getDate()).slice(-2);
+  return (y + m + d);
+}
+
+//今日の日付
+var today = formatDate(new Date());
+
+//---------------------------------------
+//ドキュメントを作る（ドキュメント名を決める）
+//---------------------------------------
+var collectioname = "VALORANT";
+var documentname1 = "flag";
+var documentname2 = "playerlist";
+
+//---------------------------------------
+// Firestoreの準備
+//---------------------------------------
+// Firestoreのインスタンス作成
+var db = firebase.firestore();
+
+// ドキュメントのリファレンス取得
+var flagRef = db.collection(collectioname).doc(documentname1).collection("VALORANT");
+var playerRef = db.collection(collectioname).doc(documentname2).collection("VALORANT");
+
+dofirestore(flagRef);
+dofirestore(playerRef);
+
+/**
+ * 同期処理
+ **/
+ //firestoreのデータを操作するおまじない
+ function dofirestore(Ref){
+   //"ask"でポイントの小さい順に並べ替えを要求してる（askが昇順、ascが降順）
+   //フラグデータを操作
+  Ref.limit(100).onSnapshot( (snapshot) => {
+    snapshot.docChanges().forEach((change) => {
+      // 追加したとき
+      if ( change.type === 'added' ) {
+        console.log("追加");
+      }
+      // 更新したとき
+      else if( change.type === 'modified' ){
+        console.log("更新");
+      }
+      // 削除したとき
+      else if ( change.type === 'removed' ) {
+        console.log("削除");
+      }
+    });
+  });
+ }
+
+
+//データ削除
+function datadelete(dataname){
+  playerRef.doc(dataname).delete().then(function() {
+  }).catch(function(error) {
+      console.error("Error removing document: ", error);
+  });
+}
+
+// メッセージをfirestoreへ送信
+function submitflag(dataname,no,agent){
+  playerRef.doc(dataname).set({
+    no: no,
+    agent: agent
+  })
+  console.log(dataname," の番号が"+no+"になりました。エージェントは："+agent);
+}
+
+document.getElementById('p1name').value="awqwa";
+
+function loadfirestore(){
+  console.log("読み込み開始");
+  playerRef.orderBy('no', "asc").limit(10).get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+          var data = doc.data();
+          var n = data.no;
+          var dispname = data.playername + "<br>" + data.valorantname;
+          document.getElementById('p'+n+'icon').src=data.twittericonurl;
+          document.getElementById('p'+n+'name').innerHTML=dispname;
+          document.getElementById('p'+n+'name').title=data.twitterurl;
+    });
+  })
+}
+
+//各プレイヤーのエージェントデータをfirestoreに送る
+function sendagent(){
+  var maphtml = $("#mapbutton").html();
+  if (maphtml == 'マップ <span class="caret"></span>'){
+    alert("\n                     注意\n※※※※※※※※※※※※※※\n      マップが選択されていません\n※※※※※※※※※※※※※※");
+    $("#mapimg").attr('src', "");
+  }
+  else{
+    var playerdata = [{}]; //連想配列の配列を用意
+    for (var i = 1; 10 >= i; i ++){
+      //ブラウザの情報からデータを取得
+      var pxno = "p"+i+"no";
+      var pxname = "p"+i+"name";
+      var pxpic = "p"+i+"pic";
+      var pxicon = "p"+i+"icon";
+      var pno = document.getElementById(pxno).innerHTML;
+      var pname = document.getElementById(pxname).innerHTML.split("<");
+      var vname = document.getElementById(pxname).innerHTML.split(">");
+      var pagent = document.getElementById(pxpic).src.split(/[/_]/); //URLを/と.で区切る
+      var ticonurl =document.getElementById(pxicon).src;
+      var turl = document.getElementById(pxname).title;
+
+      playerdata[i] = {playername:pname[0], valorantname:vname[1], no:pno, agent:pagent[pagent.length - 2], twittericonurl:ticonurl, twitterurl:turl }; //名前とナンバーとエージェント名を連想配列に入れる。エージェント名は区切ったやつの後ろから２番目の要素
+      console.log("name: "+playerdata[i].name+"  no: "+playerdata[i].no+"  agent: "+playerdata[i].agent);
+
+      //firestoreに送信する
+      playerRef.doc(playerdata[i].no).set({
+        no: playerdata[i].no,
+        playername: playerdata[i].playername,
+        valorantname: playerdata[i].valorantname,
+        agent: playerdata[i].agent,
+        twittericonurl: playerdata[i].twittericonurl,
+        twitterurl: playerdata[i].twitterurl
+      }, {merge: true}) //mergeオプションはフィールドを上書きではなく追加するオプション
+    }
+    //firestoreに送信する
+    flagRef.doc("3").set({
+      name: "3",
+      flag: "1",
+    }, {merge: true}) //mergeオプションはフィールドを上書きではなく追加するオプション
+    flagRef.doc("kousyu").set({
+      name: "kousyu",
+      flag: "syu",
+    }, {merge: true}) //mergeオプションはフィールドを上書きではなく追加するオプション
+    flagRef.doc("mapname").set({
+      name: "mapname",
+      value: mapname,
+    }, {merge: true}) //mergeオプションはフィールドを上書きではなく追加するオプション
+    $("#mapbutton").html('マップ <span class="caret"></span>');
+    $("#mapimg").attr('src', "");
+    alert("送信しました")
+
+  }
+
+}
+
+</script>
+
+
+
+</body>
+</html>
